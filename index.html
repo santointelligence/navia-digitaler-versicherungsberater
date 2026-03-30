@@ -3,1097 +3,865 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Navia – Digitale Versicherungsberaterin für die Schweiz</title>
+  <title>Navia – Digitale Versicherungsberaterin</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --navy:   #0b1326;
-      --navy2:  #111d38;
-      --blue:   #3d6bfa;
-      --blue2:  #2451e0;
-      --teal:   #00c9a7;
-      --light:  #f0f4ff;
-      --muted:  #6b7fa3;
-      --white:  #ffffff;
-      --card-bg:#ffffff;
-      --border: rgba(61,107,250,0.12);
-      --shadow: 0 24px 64px rgba(11,19,38,0.10);
+      --gold: #C4A44A;
+      --gold-light: #E8D08A;
+      --gold-dark: #9A7C2E;
+      --white: #FFFFFF;
+      --off-white: #FAFAF7;
+      --cream: #F5F0E8;
+      --dark: #1C1C1C;
+      --gray: #6B6B6B;
+      --light-gray: #E8e4DC;
+      --border: #DDD8CC;
     }
 
     html { scroll-behavior: smooth; }
 
     body {
       font-family: 'Inter', sans-serif;
-      background: #f7f9ff;
-      color: var(--navy);
+      background: var(--white);
+      color: var(--dark);
       min-height: 100vh;
-      overflow-x: hidden;
     }
 
-    /* ── HEADER ─────────────────────────────────────────── */
+    /* ---- HEADER ---- */
     header {
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
+      background: var(--white);
       border-bottom: 1px solid var(--border);
-      padding: 0 40px;
-      height: 70px;
+      padding: 0 48px;
+      height: 72px;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      box-shadow: 0 1px 12px rgba(0,0,0,0.06);
     }
 
     .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--dark);
+      letter-spacing: 0.5px;
     }
 
-    .logo-mark {
-      width: 36px; height: 36px;
-      background: linear-gradient(135deg, var(--blue) 0%, var(--teal) 100%);
-      border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.1rem; font-weight: 900; color: #fff;
+    .logo span {
+      color: var(--gold);
     }
 
-    .logo-text {
-      font-size: 1.4rem;
-      font-weight: 800;
-      color: var(--navy);
-      letter-spacing: -0.5px;
+    .logo-tagline {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-top: 2px;
     }
 
-    .logo-text span { color: var(--blue); }
+    .logo-wrap { display: flex; flex-direction: column; }
 
-    .nav-right { display: flex; align-items: center; gap: 12px; }
-
+    /* ---- LANG SWITCHER ---- */
     .lang-switcher {
       display: flex;
-      background: var(--light);
-      border-radius: 50px;
+      align-items: center;
+      gap: 4px;
+      background: var(--cream);
+      border-radius: 32px;
       padding: 4px;
-      gap: 2px;
     }
 
     .lang-btn {
       padding: 7px 18px;
+      border-radius: 28px;
       border: none;
-      border-radius: 46px;
       background: transparent;
-      color: var(--muted);
-      font-family: 'Inter', sans-serif;
+      color: var(--gray);
       font-size: 0.85rem;
       font-weight: 600;
+      font-family: 'Inter', sans-serif;
       cursor: pointer;
-      transition: all 0.2s ease;
-      letter-spacing: 0.3px;
+      letter-spacing: 0.5px;
+      transition: all 0.25s ease;
     }
 
-    .lang-btn:hover { color: var(--blue); }
+    .lang-btn:hover { color: var(--gold-dark); }
 
     .lang-btn.active {
-      background: var(--white);
-      color: var(--blue);
-      box-shadow: 0 2px 8px rgba(61,107,250,0.15);
-    }
-
-    .header-cta {
-      padding: 9px 22px;
-      background: var(--blue);
+      background: var(--gold);
       color: var(--white);
-      border: none;
-      border-radius: 50px;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.875rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-      white-space: nowrap;
+      box-shadow: 0 2px 8px rgba(196,164,74,0.35);
     }
 
-    .header-cta:hover { background: var(--blue2); transform: translateY(-1px); }
-
-    /* ── HERO ────────────────────────────────────────────── */
-    .hero-section {
-      position: relative;
-      overflow: hidden;
-      padding: 90px 40px 80px;
-    }
-
-    .hero-bg {
-      position: absolute; inset: 0; z-index: 0;
-      background: radial-gradient(ellipse 80% 60% at 60% -10%, rgba(61,107,250,0.10) 0%, transparent 65%),
-                  radial-gradient(ellipse 50% 40% at 0% 100%, rgba(0,201,167,0.07) 0%, transparent 60%);
-    }
-
-    .hero-grid {
-      position: relative; z-index: 1;
+    /* ---- HERO ---- */
+    .hero {
       max-width: 1160px;
       margin: 0 auto;
+      padding: 80px 40px 60px;
       display: grid;
-      grid-template-columns: 1fr 380px;
-      gap: 70px;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
       align-items: center;
     }
 
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      padding: 6px 14px;
-      background: rgba(61,107,250,0.08);
-      border: 1px solid rgba(61,107,250,0.18);
-      border-radius: 50px;
-      color: var(--blue);
-      font-size: 0.8rem;
-      font-weight: 600;
-      margin-bottom: 24px;
-      letter-spacing: 0.2px;
-    }
-
-    .badge-dot {
-      width: 7px; height: 7px;
-      background: var(--teal);
-      border-radius: 50%;
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.6; transform: scale(1.3); }
-    }
-
-    .hero-h1 {
-      font-size: 3.4rem;
-      font-weight: 900;
-      line-height: 1.08;
-      letter-spacing: -1.5px;
-      color: var(--navy);
-      margin-bottom: 22px;
-    }
-
-    .hero-h1 em {
-      font-style: normal;
-      background: linear-gradient(90deg, var(--blue) 0%, var(--teal) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .hero-sub {
-      font-size: 1.08rem;
-      line-height: 1.75;
-      color: var(--muted);
-      max-width: 500px;
-      margin-bottom: 36px;
-    }
-
-    .hero-actions { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
-
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 9px;
-      padding: 15px 32px;
-      background: linear-gradient(135deg, var(--blue) 0%, #5a7dff 100%);
-      color: var(--white);
-      border: none;
-      border-radius: 50px;
-      font-family: 'Inter', sans-serif;
-      font-size: 1rem;
-      font-weight: 700;
-      cursor: pointer;
-      text-decoration: none;
-      box-shadow: 0 8px 30px rgba(61,107,250,0.30);
-      transition: all 0.25s;
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 40px rgba(61,107,250,0.40);
-    }
-
-    .btn-primary svg { flex-shrink: 0; }
-
-    .btn-ghost {
+    .hero-badge {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 14px 24px;
-      background: transparent;
-      color: var(--navy);
-      border: none;
-      border-radius: 50px;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.95rem;
+      background: var(--cream);
+      border: 1px solid var(--gold-light);
+      border-radius: 32px;
+      padding: 6px 16px;
+      font-size: 0.78rem;
       font-weight: 600;
-      cursor: pointer;
-      text-decoration: none;
-      transition: color 0.2s;
+      color: var(--gold-dark);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
     }
 
-    .btn-ghost:hover { color: var(--blue); }
+    .hero-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+    }
 
-    .hero-trust {
-      display: flex;
+    .hero-text h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--dark);
+      margin-bottom: 24px;
+    }
+
+    .hero-text h1 em {
+      color: var(--gold);
+      font-style: normal;
+    }
+
+    .hero-text p {
+      font-size: 1.05rem;
+      color: var(--gray);
+      line-height: 1.75;
+      margin-bottom: 40px;
+      font-weight: 400;
+    }
+
+    .cta-btn {
+      display: inline-flex;
       align-items: center;
-      gap: 24px;
-      margin-top: 44px;
-      flex-wrap: wrap;
+      gap: 10px;
+      padding: 15px 36px;
+      background: var(--gold);
+      color: var(--white);
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
+      box-shadow: 0 4px 20px rgba(196,164,74,0.35);
     }
 
-    .trust-item {
-      display: flex; align-items: center; gap: 7px;
-      font-size: 0.82rem; font-weight: 600; color: var(--muted);
+    .cta-btn:hover {
+      background: var(--gold-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(154,124,46,0.4);
     }
 
-    .trust-icon {
-      width: 28px; height: 28px;
-      background: var(--light);
-      border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.85rem;
-    }
+    .cta-btn::after { content: '→'; }
 
-    /* ── VIDEO CARD ──────────────────────────────────────── */
+    /* ---- VIDEO CARD ---- */
     .video-card {
       position: relative;
+      border-radius: 24px;
+      overflow: hidden;
+      background: var(--dark);
+      aspect-ratio: 9/16;
+      max-width: 340px;
+      margin: 0 auto;
+      box-shadow:
+        0 4px 0 var(--gold),
+        0 24px 64px rgba(0,0,0,0.18);
     }
 
     .video-card::before {
       content: '';
       position: absolute;
-      inset: -16px;
-      border-radius: 40px;
-      background: linear-gradient(135deg, rgba(61,107,250,0.12) 0%, rgba(0,201,167,0.08) 100%);
-      z-index: 0;
-    }
-
-    .video-inner {
-      position: relative; z-index: 1;
-      border-radius: 28px;
-      overflow: hidden;
-      box-shadow: 0 30px 80px rgba(11,19,38,0.20), 0 0 0 1px rgba(255,255,255,0.8);
-      background: #000;
-      aspect-ratio: 9/16;
-    }
-
-    .video-inner iframe {
-      width: 100%; height: 100%;
-      border: none; display: block;
-    }
-
-    .video-label {
-      position: absolute;
-      bottom: -28px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--white);
-      border-radius: 50px;
-      padding: 8px 20px;
-      font-size: 0.78rem;
-      font-weight: 700;
-      color: var(--blue);
-      box-shadow: 0 4px 16px rgba(61,107,250,0.15);
-      white-space: nowrap;
+      inset: 0;
+      border-radius: 24px;
+      border: 1px solid var(--gold-light);
+      pointer-events: none;
       z-index: 2;
-      border: 1px solid var(--border);
     }
 
-    /* ── STATS ───────────────────────────────────────────── */
-    .stats-section {
-      background: var(--navy);
-      padding: 56px 40px;
+    .video-card iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    /* ---- STATS BAR ---- */
+    .stats-bar {
+      background: var(--cream);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 32px 40px;
     }
 
     .stats-inner {
       max-width: 1160px;
       margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
       gap: 24px;
     }
 
-    .stat-item {
-      text-align: center;
-      padding: 28px 20px;
-      border-radius: 18px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08);
-      transition: background 0.2s;
-    }
+    .stat-item { text-align: center; }
 
-    .stat-item:hover { background: rgba(255,255,255,0.08); }
-
-    .stat-num {
-      font-size: 2.4rem;
-      font-weight: 900;
-      letter-spacing: -1px;
-      background: linear-gradient(90deg, #fff 0%, var(--teal) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      display: block;
-      margin-bottom: 6px;
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
     }
 
     .stat-label {
       font-size: 0.82rem;
+      color: var(--gray);
+      margin-top: 6px;
       font-weight: 500;
-      color: rgba(255,255,255,0.5);
-      letter-spacing: 0.2px;
+      letter-spacing: 0.3px;
     }
 
-    /* ── FEATURES ────────────────────────────────────────── */
+    .stat-divider {
+      width: 1px;
+      height: 48px;
+      background: var(--border);
+    }
+
+    /* ---- FEATURES ---- */
     .features-section {
-      padding: 100px 40px;
-      background: #f7f9ff;
+      max-width: 1160px;
+      margin: 72px auto;
+      padding: 0 40px;
     }
 
-    .section-header {
-      text-align: center;
-      max-width: 600px;
-      margin: 0 auto 64px;
-    }
-
-    .section-tag {
-      display: inline-block;
-      padding: 5px 14px;
-      background: rgba(61,107,250,0.08);
-      color: var(--blue);
-      border-radius: 50px;
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.8px;
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 2.5px;
       text-transform: uppercase;
-      margin-bottom: 16px;
+      color: var(--gold);
+      margin-bottom: 12px;
     }
 
-    .section-h2 {
-      font-size: 2.2rem;
-      font-weight: 800;
-      letter-spacing: -0.8px;
-      line-height: 1.2;
-      color: var(--navy);
-      margin-bottom: 14px;
-    }
-
-    .section-sub {
-      font-size: 1rem;
-      color: var(--muted);
-      line-height: 1.7;
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.1rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 48px;
     }
 
     .features-grid {
-      max-width: 1160px;
-      margin: 0 auto;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 24px;
     }
 
     .feature-card {
-      background: var(--white);
-      border-radius: 22px;
-      padding: 36px 32px;
+      background: var(--off-white);
       border: 1px solid var(--border);
-      box-shadow: 0 4px 24px rgba(11,19,38,0.05);
-      transition: transform 0.25s, box-shadow 0.25s;
+      border-radius: 20px;
+      padding: 36px 28px;
+      transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
     }
 
     .feature-card:hover {
+      border-color: var(--gold-light);
+      box-shadow: 0 8px 32px rgba(196,164,74,0.12);
       transform: translateY(-4px);
-      box-shadow: 0 16px 48px rgba(61,107,250,0.12);
     }
 
-    .feature-icon-wrap {
-      width: 52px; height: 52px;
+    .feature-icon {
+      width: 52px;
+      height: 52px;
       border-radius: 14px;
-      display: flex; align-items: center; justify-content: center;
+      background: var(--cream);
+      border: 1px solid var(--gold-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-size: 1.5rem;
       margin-bottom: 20px;
     }
 
-    .icon-blue  { background: rgba(61,107,250,0.10); }
-    .icon-teal  { background: rgba(0,201,167,0.10); }
-    .icon-purple{ background: rgba(124,58,237,0.10); }
-
     .feature-card h3 {
       font-size: 1.05rem;
-      font-weight: 700;
+      font-weight: 600;
+      color: var(--dark);
       margin-bottom: 10px;
-      color: var(--navy);
     }
 
     .feature-card p {
-      font-size: 0.92rem;
-      color: var(--muted);
+      font-size: 0.9rem;
+      color: var(--gray);
       line-height: 1.65;
     }
 
-    /* ── HOW IT WORKS ────────────────────────────────────── */
+    /* ---- HOW IT WORKS ---- */
     .how-section {
-      background: var(--navy);
-      padding: 100px 40px;
+      background: var(--cream);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 72px 40px;
     }
 
-    .how-section .section-tag { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.7); }
-    .how-section .section-h2 { color: var(--white); }
-    .how-section .section-sub { color: rgba(255,255,255,0.5); }
-
-    .steps-grid {
+    .how-inner {
       max-width: 1160px;
       margin: 0 auto;
+    }
+
+    .steps-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-      position: relative;
+      gap: 32px;
+      margin-top: 48px;
     }
 
-    .steps-grid::before {
-      content: '';
-      position: absolute;
-      top: 36px; left: calc(16% + 20px); right: calc(16% + 20px);
-      height: 2px;
-      background: linear-gradient(90deg, var(--blue) 0%, var(--teal) 100%);
-      opacity: 0.3;
+    .step {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
     }
 
-    .step-card {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 22px;
-      padding: 36px 28px;
-      text-align: center;
-      transition: background 0.2s;
-    }
-
-    .step-card:hover { background: rgba(255,255,255,0.07); }
-
-    .step-num {
-      width: 56px; height: 56px;
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.2rem; font-weight: 900;
-      background: linear-gradient(135deg, var(--blue) 0%, var(--teal) 100%);
-      color: #fff;
-      margin: 0 auto 20px;
-      box-shadow: 0 8px 24px rgba(61,107,250,0.35);
-    }
-
-    .step-card h3 {
-      font-size: 1rem;
+    .step-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
       font-weight: 700;
-      color: var(--white);
-      margin-bottom: 10px;
+      color: var(--gold-light);
+      line-height: 1;
+      margin-bottom: 16px;
     }
 
-    .step-card p {
+    .step h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--dark);
+      margin-bottom: 8px;
+    }
+
+    .step p {
       font-size: 0.88rem;
-      color: rgba(255,255,255,0.45);
+      color: var(--gray);
       line-height: 1.65;
     }
 
-    /* ── CTA SECTION ─────────────────────────────────────── */
+    /* ---- CTA SECTION ---- */
     .cta-section {
-      padding: 100px 40px;
-      background: #f7f9ff;
-    }
-
-    .cta-box {
-      max-width: 760px;
-      margin: 0 auto;
-      background: linear-gradient(135deg, var(--navy) 0%, #1a2d5a 100%);
-      border-radius: 32px;
-      padding: 70px 60px;
+      max-width: 720px;
+      margin: 72px auto;
+      padding: 60px 40px;
       text-align: center;
-      box-shadow: 0 40px 100px rgba(11,19,38,0.15);
+      background: var(--dark);
+      border-radius: 28px;
       position: relative;
       overflow: hidden;
+      margin-left: auto;
+      margin-right: auto;
     }
 
-    .cta-box::before {
+    .cta-section::before {
       content: '';
       position: absolute;
-      top: -80px; right: -80px;
-      width: 280px; height: 280px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(0,201,167,0.18) 0%, transparent 70%);
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-light), var(--gold), var(--gold-dark));
     }
 
-    .cta-box h2 {
-      font-size: 2.4rem;
-      font-weight: 900;
-      letter-spacing: -0.8px;
+    .cta-section-wrap {
+      padding: 0 40px;
+    }
+
+    .cta-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
       color: var(--white);
       margin-bottom: 16px;
     }
 
-    .cta-box p {
+    .cta-section p {
       font-size: 1rem;
-      color: rgba(255,255,255,0.55);
-      margin-bottom: 36px;
+      color: #B0B0B0;
+      margin-bottom: 32px;
       line-height: 1.7;
     }
 
-    /* ── FOOTER ──────────────────────────────────────────── */
-    footer {
-      background: var(--navy);
-      border-top: 1px solid rgba(255,255,255,0.06);
-      padding: 40px;
+    /* ---- TRUST ROW ---- */
+    .trust-row {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-top: 28px;
     }
 
-    .footer-inner {
-      max-width: 1160px;
-      margin: 0 auto;
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82rem;
+      color: #888;
+      font-weight: 500;
+    }
+
+    .trust-item::before {
+      content: '✓';
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    /* ---- FOOTER ---- */
+    footer {
+      background: var(--dark);
+      border-top: 1px solid #333;
+      padding: 32px 40px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 20px;
     }
 
-    .footer-logo .logo-text { color: rgba(255,255,255,0.8); font-size: 1.1rem; }
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .footer-logo span { color: var(--gold); }
 
     .footer-copy {
       font-size: 0.82rem;
-      color: rgba(255,255,255,0.3);
+      color: #666;
     }
 
-    .footer-links {
-      display: flex; gap: 24px;
-    }
-
-    .footer-links a {
-      font-size: 0.82rem;
-      color: rgba(255,255,255,0.35);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
-    .footer-links a:hover { color: rgba(255,255,255,0.7); }
-
-    /* ── LANG SWITCH ─────────────────────────────────────── */
+    /* ---- LANG CONTENT ---- */
     .lang-content { display: none; }
-    .lang-content.active { display: block; }
+    .lang-content.active { display: contents; }
 
-    /* ── RESPONSIVE ──────────────────────────────────────── */
-    @media (max-width: 980px) {
-      .hero-grid {
+    /* ---- RESPONSIVE ---- */
+    @media (max-width: 900px) {
+      .hero {
         grid-template-columns: 1fr;
-        gap: 50px;
+        padding: 48px 24px 40px;
+        gap: 48px;
         text-align: center;
       }
 
-      .hero-h1 { font-size: 2.5rem; }
-      .hero-sub { max-width: 100%; margin-left: auto; margin-right: auto; }
-      .hero-actions { justify-content: center; }
-      .hero-trust { justify-content: center; }
+      .hero-text h1 { font-size: 2.2rem; }
 
-      .video-card { max-width: 300px; margin: 0 auto; }
+      .hero-badge { margin: 0 auto 24px; }
 
-      .stats-inner { grid-template-columns: repeat(2, 1fr); }
-      .features-grid { grid-template-columns: 1fr 1fr; }
-      .steps-grid { grid-template-columns: 1fr; }
-      .steps-grid::before { display: none; }
-    }
+      .video-card {
+        max-width: 280px;
+        order: -1;
+      }
 
-    @media (max-width: 640px) {
-      header { padding: 0 20px; height: 60px; }
-      .header-cta { display: none; }
-      .hero-section { padding: 60px 20px 60px; }
-      .hero-h1 { font-size: 2rem; letter-spacing: -0.8px; }
-      .stats-inner { grid-template-columns: repeat(2, 1fr); }
-      .features-section, .how-section, .cta-section { padding: 70px 20px; }
       .features-grid { grid-template-columns: 1fr; }
-      .cta-box { padding: 50px 28px; }
-      .cta-box h2 { font-size: 1.8rem; }
-      footer { padding: 28px 20px; }
-      .footer-inner { flex-direction: column; text-align: center; }
-      .stats-section { padding: 44px 20px; }
+      .steps-grid { grid-template-columns: 1fr; }
+      .stats-inner { flex-direction: column; gap: 20px; }
+      .stat-divider { display: none; }
+
+      header { padding: 0 20px; }
+      .features-section { padding: 0 24px; }
+      .how-section { padding: 48px 24px; }
+      .cta-section { margin: 48px 24px; padding: 40px 24px; }
+      footer { flex-direction: column; gap: 12px; text-align: center; padding: 24px; }
     }
   </style>
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════════════════════
-     HEADER
-═══════════════════════════════════════════════════════ -->
-<header>
-  <a href="#" class="logo">
-    <div class="logo-mark">N</div>
-    <span class="logo-text">Navia<span>.</span></span>
-  </a>
-  <div class="nav-right">
-    <div class="lang-switcher" id="lang-switcher">
+  <header>
+    <div class="logo-wrap">
+      <div class="logo">Navia<span>.</span></div>
+      <div class="logo-tagline">Digitale Versicherungsberaterin</div>
+    </div>
+    <div class="lang-switcher">
       <button class="lang-btn active" onclick="setLang('de')">DE</button>
       <button class="lang-btn" onclick="setLang('fr')">FR</button>
       <button class="lang-btn" onclick="setLang('it')">IT</button>
     </div>
-    <!-- DE header CTA -->
-    <button class="header-cta" id="hcta-de">Beratung starten</button>
-    <button class="header-cta" id="hcta-fr" style="display:none">Commencer</button>
-    <button class="header-cta" id="hcta-it" style="display:none">Inizia</button>
-  </div>
-</header>
+  </header>
 
+  <!-- ═══════════════ DEUTSCH ═══════════════ -->
+  <div id="content-de" class="lang-content active">
 
-<!-- ═══════════════════════════════════════════════════════
-     DEUTSCH
-════════════════════════════════════════════════════════ -->
-<div id="content-de" class="lang-content active">
-
-  <!-- HERO -->
-  <section class="hero-section">
-    <div class="hero-bg"></div>
-    <div class="hero-grid">
+    <section class="hero">
       <div class="hero-text">
-        <div class="badge">
-          <div class="badge-dot"></div>
-          KI-basierte Versicherungsberatung
-        </div>
-        <h1 class="hero-h1">Ihre smarte<br/><em>Versicherungs&shy;beraterin</em><br/>für die Schweiz</h1>
-        <p class="hero-sub">
-          Navia analysiert Ihr persönliches Profil und findet in 3 Minuten die
-          optimalen Versicherungen aus über 30 Schweizer Anbietern –
-          unabhängig, transparent und vollkommen kostenlos.
+        <div class="hero-badge">Für die Schweiz</div>
+        <h1>Ihre persönliche<br/><em>Versicherungs&shy;beraterin</em><br/>für die Schweiz</h1>
+        <p>
+          Navia analysiert Ihr Profil und findet die besten Schweizer Versicherungen –
+          unabhängig, transparent und kostenlos. Erhalten Sie in 3 Minuten
+          massgeschneiderte Empfehlungen von über 30 Versicherern.
         </p>
-        <div class="hero-actions">
-          <a href="#" class="btn-primary">
-            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
-            Kostenlose Beratung starten
-          </a>
-          <a href="#" class="btn-ghost">Mehr erfahren</a>
-        </div>
-        <div class="hero-trust">
-          <div class="trust-item"><div class="trust-icon">🛡️</div> 100% unabhängig</div>
-          <div class="trust-item"><div class="trust-icon">⚡</div> Nur 3 Minuten</div>
-          <div class="trust-item"><div class="trust-icon">🔒</div> DSGVO-konform</div>
+        <a href="#" class="cta-btn">Kostenlose Beratung starten</a>
+        <div class="trust-row" style="justify-content: flex-start; margin-top: 24px;">
+          <span class="trust-item">Kostenlos</span>
+          <span class="trust-item">Unabhängig</span>
+          <span class="trust-item">DSGVO-konform</span>
         </div>
       </div>
       <div class="video-card">
-        <div class="video-inner">
-          <iframe
-            src="https://app.heygen.com/embed/93b37c854b8d4395a5134d3c805de861"
-            allow="autoplay; fullscreen"
-            allowfullscreen
-            title="Navia – Digitale Versicherungsberaterin (Deutsch)"
-          ></iframe>
-        </div>
-        <div class="video-label">👋 Navia stellt sich vor</div>
+        <iframe
+          src="https://app.heygen.com/embeds/93b37c854b8d4395a5134d3c805de861"
+          allow="autoplay; fullscreen"
+          allowfullscreen
+          title="Navia – Digitale Versicherungsberaterin (Deutsch)"
+        ></iframe>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- STATS -->
-  <div class="stats-section">
-    <div class="stats-inner">
-      <div class="stat-item">
-        <span class="stat-num">30+</span>
-        <div class="stat-label">Schweizer Versicherer</div>
-      </div>
-      <div class="stat-item">
-        <span class="stat-num">3 min</span>
-        <div class="stat-label">Beratungszeit</div>
-      </div>
-      <div class="stat-item">
-        <span class="stat-num">100%</span>
-        <div class="stat-label">Kostenlos & unabhängig</div>
-      </div>
-      <div class="stat-item">
-        <span class="stat-num">DE/FR/IT</span>
-        <div class="stat-label">Alle Landessprachen</div>
+    <div class="stats-bar">
+      <div class="stats-inner">
+        <div class="stat-item">
+          <div class="stat-number">30+</div>
+          <div class="stat-label">Schweizer Versicherer</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <div class="stat-number">3 Min</div>
+          <div class="stat-label">Beratungszeit</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <div class="stat-number">100%</div>
+          <div class="stat-label">Kostenlos & Unabhängig</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <div class="stat-number">DE·FR·IT</div>
+          <div class="stat-label">Alle Landessprachen</div>
+        </div>
       </div>
     </div>
+
+    <section class="features-section">
+      <div class="section-label">Ihre Vorteile</div>
+      <div class="section-title">Warum Navia?</div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🛡️</div>
+          <h3>Unabhängige Beratung</h3>
+          <p>Wir vergleichen Angebote von über 30 Schweizer Versicherern – ohne versteckte Interessen oder Provisionen.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3>In 3 Minuten zum Ergebnis</h3>
+          <p>Schnell, einfach und präzise: Ihre persönlichen Empfehlungen in nur 3 Minuten – jederzeit und überall.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔒</div>
+          <h3>Datenschutz garantiert</h3>
+          <p>Ihre Daten sind bei uns sicher. 100% DSGVO-konform und nach Schweizer Datenschutzrecht.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="how-section">
+      <div class="how-inner">
+        <div class="section-label">So einfach geht's</div>
+        <div class="section-title">In 3 Schritten zur Beratung</div>
+        <div class="steps-grid">
+          <div class="step">
+            <div class="step-number">01</div>
+            <h3>Profil erstellen</h3>
+            <p>Beantworten Sie wenige Fragen zu Ihrer Situation und Ihren Versicherungsbedürfnissen.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">02</div>
+            <h3>Angebote vergleichen</h3>
+            <p>Navia analysiert über 30 Schweizer Versicherer und stellt die besten Optionen für Sie zusammen.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">03</div>
+            <h3>Entscheidung treffen</h3>
+            <p>Wählen Sie das passende Angebot – kostenlos, transparent und ohne Verpflichtung.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-section-wrap" style="padding: 72px 40px;">
+      <div class="cta-section">
+        <h2>Bereit für Ihre kostenlose Beratung?</h2>
+        <p>Starten Sie jetzt und erhalten Sie in 3 Minuten massgeschneiderte Versicherungsempfehlungen.</p>
+        <a href="#" class="cta-btn">Jetzt starten</a>
+      </div>
+    </div>
+
   </div>
+  <!-- ═══════════════ END DEUTSCH ═══════════════ -->
 
-  <!-- FEATURES -->
-  <section class="features-section">
-    <div class="section-header">
-      <div class="section-tag">Vorteile</div>
-      <h2 class="section-h2">Warum Navia wählen?</h2>
-      <p class="section-sub">Wir verbinden modernste KI-Technologie mit fundiertem Versicherungs-Fachwissen – für Ihre beste Entscheidung.</p>
-    </div>
-    <div class="features-grid">
-      <div class="feature-card">
-        <div class="feature-icon-wrap icon-blue">🛡️</div>
-        <h3>Unabhängige Beratung</h3>
-        <p>Wir vergleichen Angebote von über 30 Schweizer Versicherern ohne versteckte Interessenkonflikte – Ihr Vorteil steht immer an erster Stelle.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon-wrap icon-teal">⚡</div>
-        <h3>In 3 Minuten zum Ergebnis</h3>
-        <p>Schnell, einfach und präzise: Beantworten Sie wenige Fragen und erhalten Sie sofort massgeschneiderte Versicherungsempfehlungen.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon-wrap icon-purple">🔒</div>
-        <h3>Datenschutz garantiert</h3>
-        <p>Ihre Daten sind bei uns absolut sicher. Vollständig DSGVO-konform und nach Schweizer Datenschutzrecht verarbeitet.</p>
-      </div>
-    </div>
-  </section>
+  <!-- ═══════════════ FRANÇAIS ═══════════════ -->
+  <div id="content-fr" class="lang-content">
 
-  <!-- HOW IT WORKS -->
-  <section class="how-section">
-    <div class="section-header">
-      <div class="section-tag">So funktioniert es</div>
-      <h2 class="section-h2">In 3 Schritten zur optimalen Versicherung</h2>
-      <p class="section-sub">Unser intelligenter Berater begleitet Sie durch den gesamten Prozess.</p>
-    </div>
-    <div class="steps-grid">
-      <div class="step-card">
-        <div class="step-num">1</div>
-        <h3>Profil erstellen</h3>
-        <p>Beantworten Sie wenige Fragen zu Ihrem Lebensumstand, Bedürfnissen und aktuellen Versicherungen.</p>
-      </div>
-      <div class="step-card">
-        <div class="step-num">2</div>
-        <h3>KI-Analyse</h3>
-        <p>Navia analysiert Ihr Profil und vergleicht automatisch über 30 Schweizer Versicherungsangebote für Sie.</p>
-      </div>
-      <div class="step-card">
-        <div class="step-num">3</div>
-        <h3>Empfehlung erhalten</h3>
-        <p>Sie erhalten eine klare, personalisierte Empfehlung – kostenlos und ohne Verpflichtung.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="cta-section">
-    <div class="cta-box">
-      <h2>Jetzt kostenlos beraten lassen</h2>
-      <p>Über 30 Schweizer Versicherer im Vergleich. In nur 3 Minuten zu Ihrer optimalen Versicherung.</p>
-      <a href="#" class="btn-primary">
-        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
-        Beratung starten – kostenlos
-      </a>
-    </div>
-  </section>
-
-</div><!-- /content-de -->
-
-
-<!-- ═══════════════════════════════════════════════════════
-     FRANÇAIS
-═══════════════════════════════════════════════════════ -->
-<div id="content-fr" class="lang-content">
-
-  <!-- HERO -->
-  <section class="hero-section">
-    <div class="hero-bg"></div>
-    <div class="hero-grid">
+    <section class="hero">
       <div class="hero-text">
-        <div class="badge">
-          <div class="badge-dot"></div>
-          Conseil en assurances par IA
-        </div>
-        <h1 class="hero-h1">Votre conseillère<br/><em>en assurances</em><br/>digitale en Suisse</h1>
-        <p class="hero-sub">
-          Navia analyse votre profil et trouve en 3 minutes les meilleures assurances
-          parmi plus de 30 assureurs suisses – conseil indépendant,
-          transparent et entièrement gratuit.
+        <div class="hero-badge">Pour la Suisse</div>
+        <h1>Votre conseillère<br/><em>en assurances</em><br/>digitale en Suisse</h1>
+        <p>
+          Navia analyse votre profil et trouve les meilleures assurances suisses –
+          indépendante, transparente et gratuite. Recevez des recommandations
+          personnalisées de plus de 30 assureurs en 3 minutes.
         </p>
-        <div class="hero-actions">
-          <a href="#" class="btn-primary">
-            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
-            Commencer le conseil gratuit
-          </a>
-          <a href="#" class="btn-ghost">En savoir plus</a>
-        </div>
-        <div class="hero-trust">
-          <div class="trust-item"><div class="trust-icon">🛡️</div> 100% indépendant</div>
-          <div class="trust-item"><div class="trust-icon">⚡</div> 3 minutes seulement</div>
-          <div class="trust-item"><div class="trust-icon">🔒</div> Conforme RGPD</div>
+        <a href="#" class="cta-btn">Commencer le conseil gratuit</a>
+        <div class="trust-row" style="justify-content: flex-start; margin-top: 24px;">
+          <span class="trust-item">Gratuit</span>
+          <span class="trust-item">Indépendant</span>
+          <span class="trust-item">Conforme RGPD</span>
         </div>
       </div>
       <div class="video-card">
-        <div class="video-inner">
-          <iframe
-            src="https://app.heygen.com/embed/0fe2d536683846ccbc19aed71a1e8f4b"
-            allow="autoplay; fullscreen"
-            allowfullscreen
-            title="Navia – Conseillère en assurances (Français)"
-          ></iframe>
-        </div>
-        <div class="video-label">👋 Navia se présente</div>
+        <iframe
+          src="https://app.heygen.com/embeds/0fe2d536683846ccbc19aed71a1e8f4b"
+          allow="autoplay; fullscreen"
+          allowfullscreen
+          title="Navia – Conseillère en assurances (Français)"
+        ></iframe>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- STATS -->
-  <div class="stats-section">
-    <div class="stats-inner">
-      <div class="stat-item">
-        <span class="stat-num">30+</span>
-        <div class="stat-label">Assureurs suisses</div>
-      </div>
-      <div class="stat-item">
-        <span class="stat-num">3 min</span>
-        <div class="stat-label">Durée du conseil</div>
-      </div>
-      <div class="stat-item">
-        <span class="stat-num">100%</span>
-        <div class="stat-label">Gratuit & indépendant</div>
-      </div>
-      <div class="stat-item">
-        <span class="stat-num">DE/FR/IT</span>
-        <div class="stat-label">Langues nationales</div>
+    <div class="stats-bar">
+      <div class="stats-inner">
+        <div class="stat-item">
+          <div class="stat-number">30+</div>
+          <div class="stat-label">Assureurs suisses</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <div class="stat-number">3 Min</div>
+          <div class="stat-label">Durée du conseil</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <div class="stat-number">100%</div>
+          <div class="stat-label">Gratuit & Indépendant</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <div class="stat-number">DE·FR·IT</div>
+          <div class="stat-label">Toutes les langues nationales</div>
+        </div>
       </div>
     </div>
+
+    <section class="features-section">
+      <div class="section-label">Vos avantages</div>
+      <div class="section-title">Pourquoi Navia?</div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🛡️</div>
+          <h3>Conseil indépendant</h3>
+          <p>Nous comparons les offres de plus de 30 assureurs suisses – sans intérêts cachés ni commissions.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3>Résultat en 3 minutes</h3>
+          <p>Rapide, simple et précis: vos recommandations personnelles en seulement 3 minutes – partout et à tout moment.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔒</div>
+          <h3>Protection des données</h3>
+          <p>Vos données sont en sécurité. 100% conforme au RGPD et au droit suisse de la protection des données.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="how-section">
+      <div class="how-inner">
+        <div class="section-label">C'est si simple</div>
+        <div class="section-title">En 3 étapes vers le conseil</div>
+        <div class="steps-grid">
+          <div class="step">
+            <div class="step-number">01</div>
+            <h3>Créer votre profil</h3>
+            <p>Répondez à quelques questions sur votre situation et vos besoins en assurance.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">02</div>
+            <h3>Comparer les offres</h3>
+            <p>Navia analyse plus de 30 assureurs suisses et sélectionne les meilleures options pour vous.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">03</div>
+            <h3>Prendre votre décision</h3>
+            <p>Choisissez l'offre adaptée – gratuite, transparente et sans engagement.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-section-wrap" style="padding: 72px 40px;">
+      <div class="cta-section">
+        <h2>Prêt pour votre conseil gratuit?</h2>
+        <p>Commencez maintenant et recevez des recommandations d'assurance personnalisées en 3 minutes.</p>
+        <a href="#" class="cta-btn">Commencer maintenant</a>
+      </div>
+    </div>
+
   </div>
+  <!-- ═══════════════ END FRANÇAIS ═══════════════ -->
 
-  <!-- FEATURES -->
-  <section class="features-section">
-    <div class="section-header">
-      <div class="section-tag">Avantages</div>
-      <h2 class="section-h2">Pourquoi choisir Navia ?</h2>
-      <p class="section-sub">Nous combinons l'IA de pointe avec une expertise approfondie en assurance – pour la meilleure décision qui soit.</p>
-    </div>
-    <div class="features-grid">
-      <div class="feature-card">
-        <div class="feature-icon-wrap icon-blue">🛡️</div>
-        <h3>Conseil indépendant</h3>
-        <p>Nous comparons les offres de plus de 30 assureurs suisses sans conflits d'intérêts – votre avantage est toujours la priorité.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon-wrap icon-teal">⚡</div>
-        <h3>Résultat en 3 minutes</h3>
-        <p>Rapide, simple et précis : répondez à quelques questions et obtenez immédiatement des recommandations d'assurance personnalisées.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon-wrap icon-purple">🔒</div>
-        <h3>Protection des données</h3>
-        <p>Vos données sont en sécurité chez nous. Entièrement conforme au RGPD et traité selon le droit suisse de la protection des données.</p>
-      </div>
-    </div>
-  </section>
+  <!-- ═══════════════ ITALIANO ═══════════════ -->
+  <div id="content-it" class="lang-content">
 
-  <!-- HOW IT WORKS -->
-  <section class="how-section">
-    <div class="section-header">
-      <div class="section-tag">Comment ça marche</div>
-      <h2 class="section-h2">3 étapes vers la meilleure assurance</h2>
-      <p class="section-sub">Notre conseiller intelligent vous guide tout au long du processus.</p>
-    </div>
-    <div class="steps-grid">
-      <div class="step-card">
-        <div class="step-num">1</div>
-        <h3>Créer votre profil</h3>
-        <p>Répondez à quelques questions sur votre situation, vos besoins et vos assurances actuelles.</p>
-      </div>
-      <div class="step-card">
-        <div class="step-num">2</div>
-        <h3>Analyse par IA</h3>
-        <p>Navia analyse votre profil et compare automatiquement plus de 30 offres d'assurance suisses pour vous.</p>
-      </div>
-      <div class="step-card">
-        <div class="step-num">3</div>
-        <h3>Recevoir votre recommandation</h3>
-        <p>Vous recevez une recommandation claire et personnalisée – gratuitement et sans engagement.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="cta-section">
-    <div class="cta-box">
-      <h2>Obtenez des conseils gratuits maintenant</h2>
-      <p>Plus de 30 assureurs suisses comparés. Votre assurance optimale en seulement 3 minutes.</p>
-      <a href="#" class="btn-primary">
-        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
-        Commencer – c'est gratuit
-      </a>
-    </div>
-  </section>
-
-</div><!-- /content-fr -->
-
-
-<!-- ═══════════════════════════════════════════════════════
-     ITALIANO
-════════════════════════════════════════════════════════ -->
-<div id="content-it" class="lang-content">
-
-  <!-- HERO -->
-  <section class="hero-section">
-    <div class="hero-bg"></div>
-    <div class="hero-grid">
+    <section class="hero">
       <div class="hero-text">
-        <div class="badge">
-          <div class="badge-dot"></div>
-          Consulenza assicurativa con IA
-        </div>
-        <h1 class="hero-h1">La tua consulente<br/><em>assicurativa</em><br/>digitale in Svizzera</h1>
-        <p class="hero-sub">
-          Navia analizza il tuo profilo e trova in 3 minuti le migliori assicurazioni
-          tra oltre 30 assicuratori svizzeri – consulenza indipendente,
-          trasparente e completamente gratuita.
+        <div class="hero-badge">Per la Svizzera</div>
+        <h1>La tua consulente<br/><em>assicurativa</em><br/>digitale in Svizzera</h1>
+        <p>
+          Navia analizza il tuo profilo e trova le migliori assicurazioni svizzere –
+          indipendente, trasparente e gratuita. Ricevi raccomandazioni personalizzate
+          da oltre 30 assicuratori in 3 minuti.
         </p>
-        <div class="hero-actions">
-          <a href="#" class="btn-primary">
-            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
-            Inizia la consulenza gratuita
-          </a>
-          <a href="#" class="btn-ghost">Scopri di più</a>
-        </div>
-        <div class="hero-trust">
-          <div class="trust-item"><div class="trust-icon">🛡️</div> 100% indipendente</div>
-          <div class="trust-item"><div class="trust-icon">⚡</div> Solo 3 minuti</div>
-          <div class="trust-item"><div class="trust-icon">🔒</div> Conforme GDPR</div>
+        <a href="#" class="cta-btn">Inizia la consulenza gratuita</a>
+        <div class="trust-row" style="justify-content: flex-start; margin-top: 24px;">
+          <span class="trust-item">Gratuito</span>
+          <span class="trust-item">Indipendente</span>
+          <span class="trust-item">Conforme GDPR</span>
         </div>
       </div>
       <div class="video-card">
-        <div class="video-inner">
-          <iframe
-            src="https://app.heygen.com/embed/e9146cc0f2054269b6db8156d1ea5fcf"
-            allow="autoplay; fullscreen"
-            allowfullscreen
-            title="Navia – Consulente assicurativa (Italiano)"
-          ></iframe>
+        <iframe
+          src="https://app.heygen.com/embeds/e9146cc0f2054269b6db8156d1ea5fcf"
+          allow="autoplay; fullscreen"
+          allowfullscreen
+          title="Navia – Consulente assicurativa (Italiano)"
+        ></iframe>
+      </div>
+    </section>
+
+    <div class="stats-bar">
+      <div class="stats-inner">
+        <div class="stat-item">
+          <div class="stat-number">30+</div>
+          <div class="stat-label">Assicuratori svizzeri</div>
         </div>
-        <div class="video-label">👋 Navia si presenta</div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <div class="stat-number">3 Min</div>
+          <div class="stat-label">Durata della consulenza</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <div class="stat-number">100%</div>
+          <div class="stat-label">Gratuito & Indipendente</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <div class="stat-number">DE·FR·IT</div>
+          <div class="stat-label">Tutte le lingue nazionali</div>
+        </div>
       </div>
     </div>
-  </section>
 
-  <!-- STATS -->
-  <div class="stats-section">
-    <div class="stats-inner">
-      <div class="stat-item">
-        <span class="stat-num">30+</span>
-        <div class="stat-label">Assicuratori svizzeri</div>
+    <section class="features-section">
+      <div class="section-label">I tuoi vantaggi</div>
+      <div class="section-title">Perché Navia?</div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🛡️</div>
+          <h3>Consulenza indipendente</h3>
+          <p>Confrontiamo le offerte di oltre 30 assicuratori svizzeri – senza interessi nascosti o commissioni.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3>Risultato in 3 minuti</h3>
+          <p>Rapido, semplice e preciso: le tue raccomandazioni personali in soli 3 minuti – ovunque e in qualsiasi momento.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔒</div>
+          <h3>Protezione dei dati</h3>
+          <p>I tuoi dati sono al sicuro. 100% conforme al GDPR e al diritto svizzero sulla protezione dei dati.</p>
+        </div>
       </div>
-      <div class="stat-item">
-        <span class="stat-num">3 min</span>
-        <div class="stat-label">Durata della consulenza</div>
-      </div>
-      <div class="stat-item">
-        <span class="stat-num">100%</span>
-        <div class="stat-label">Gratuito & indipendente</div>
-      </div>
-      <div class="stat-item">
-        <span class="stat-num">DE/FR/IT</span>
-        <div class="stat-label">Lingue nazionali</div>
+    </section>
+
+    <div class="how-section">
+      <div class="how-inner">
+        <div class="section-label">È così semplice</div>
+        <div class="section-title">In 3 passi verso la consulenza</div>
+        <div class="steps-grid">
+          <div class="step">
+            <div class="step-number">01</div>
+            <h3>Crea il tuo profilo</h3>
+            <p>Rispondi ad alcune domande sulla tua situazione e le tue esigenze assicurative.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">02</div>
+            <h3>Confronta le offerte</h3>
+            <p>Navia analizza oltre 30 assicuratori svizzeri e seleziona le migliori opzioni per te.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">03</div>
+            <h3>Prendi la tua decisione</h3>
+            <p>Scegli l'offerta adatta – gratuita, trasparente e senza impegno.</p>
+          </div>
+        </div>
       </div>
     </div>
+
+    <div class="cta-section-wrap" style="padding: 72px 40px;">
+      <div class="cta-section">
+        <h2>Pronto per la tua consulenza gratuita?</h2>
+        <p>Inizia ora e ricevi raccomandazioni assicurative personalizzate in 3 minuti.</p>
+        <a href="#" class="cta-btn">Inizia ora</a>
+      </div>
+    </div>
+
   </div>
+  <!-- ═══════════════ END ITALIANO ═══════════════ -->
 
-  <!-- FEATURES -->
-  <section class="features-section">
-    <div class="section-header">
-      <div class="section-tag">Vantaggi</div>
-      <h2 class="section-h2">Perché scegliere Navia?</h2>
-      <p class="section-sub">Combiniamo la tecnologia IA più avanzata con una profonda competenza assicurativa – per la tua migliore decisione.</p>
-    </div>
-    <div class="features-grid">
-      <div class="feature-card">
-        <div class="feature-icon-wrap icon-blue">🛡️</div>
-        <h3>Consulenza indipendente</h3>
-        <p>Confrontiamo le offerte di oltre 30 assicuratori svizzeri senza conflitti di interesse – il tuo vantaggio è sempre la priorità.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon-wrap icon-teal">⚡</div>
-        <h3>Risultato in 3 minuti</h3>
-        <p>Veloce, semplice e preciso: rispondi a poche domande e ricevi subito raccomandazioni assicurative personalizzate.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon-wrap icon-purple">🔒</div>
-        <h3>Protezione dei dati</h3>
-        <p>I tuoi dati sono al sicuro con noi. Completamente conforme al GDPR e trattato secondo la legge svizzera sulla protezione dei dati.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- HOW IT WORKS -->
-  <section class="how-section">
-    <div class="section-header">
-      <div class="section-tag">Come funziona</div>
-      <h2 class="section-h2">3 passi verso la miglior assicurazione</h2>
-      <p class="section-sub">Il nostro consulente intelligente ti guida attraverso l'intero processo.</p>
-    </div>
-    <div class="steps-grid">
-      <div class="step-card">
-        <div class="step-num">1</div>
-        <h3>Crea il tuo profilo</h3>
-        <p>Rispondi a poche domande sulla tua situazione, le tue esigenze e le assicurazioni attuali.</p>
-      </div>
-      <div class="step-card">
-        <div class="step-num">2</div>
-        <h3>Analisi IA</h3>
-        <p>Navia analizza il tuo profilo e confronta automaticamente oltre 30 offerte assicurative svizzere.</p>
-      </div>
-      <div class="step-card">
-        <div class="step-num">3</div>
-        <h3>Ricevi la raccomandazione</h3>
-        <p>Ricevi una raccomandazione chiara e personalizzata – gratuitamente e senza impegno.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="cta-section">
-    <div class="cta-box">
-      <h2>Ricevi subito una consulenza gratuita</h2>
-      <p>Oltre 30 assicuratori svizzeri a confronto. La tua assicurazione ottimale in soli 3 minuti.</p>
-      <a href="#" class="btn-primary">
-        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
-        Inizia – è gratuito
-      </a>
-    </div>
-  </section>
-
-</div><!-- /content-it -->
-
-
-<!-- ═══════════════════════════════════════════════════════
-     FOOTER
-════════════════════════════════════════════════════════ -->
-<footer>
-  <div class="footer-inner">
-    <div class="footer-logo">
-      <span class="logo-text">Navia<span style="color:var(--blue)">.</span></span>
-    </div>
+  <footer>
+    <div class="footer-logo">Navia<span>.</span></div>
     <div class="footer-copy">© 2026 Navia – Digitale Versicherungsberaterin für die Schweiz (DE / FR / IT)</div>
-    <div class="footer-links">
-      <a href="#">Datenschutz</a>
-      <a href="#">Impressum</a>
-      <a href="#">Kontakt</a>
-    </div>
-  </div>
-</footer>
+  </footer>
 
-
-<script>
-  function setLang(lang) {
-    // Content panels
-    document.querySelectorAll('.lang-content').forEach(el => el.classList.remove('active'));
-    document.getElementById('content-' + lang).classList.add('active');
-
-    // Lang buttons
-    document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-      if (btn.textContent.toLowerCase() === lang) btn.classList.add('active');
-    });
-
-    // Header CTA buttons
-    ['de','fr','it'].forEach(l => {
-      const el = document.getElementById('hcta-' + l);
-      if (el) el.style.display = l === lang ? '' : 'none';
-    });
-
-    document.documentElement.lang = lang;
-  }
-</script>
+  <script>
+    function setLang(lang) {
+      document.querySelectorAll('.lang-content').forEach(Yl => el.classList.remove('active'));
+      document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+      document.getElementById('content-' + lang).classList.add('active');
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        if (btn.textContent.toLowerCase() === lang) btn.classList.add('active');
+      });
+      document.documentElement.lang = lang;
+    }
+  </script>
 
 </body>
 </html>
