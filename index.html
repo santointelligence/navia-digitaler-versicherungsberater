@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Navia – Digitale Versicherungsberatung für die Schweiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+/* RESET */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:16px;line-height:1.6;overflow-x:hidden}
+/* TOKENS */
+:root{
+  --gold:#C4A44A;--gold-light:#D4B660;--gold-dim:rgba(196,164,74,0.15);
+  --bg:#09090E;--bg-2:#0D0D14;--bg-3:#12121A;--bg-4:#16161F;
+  --white:#FFFFFF;--text:#DEDAD2;--text-muted:#837F78;--text-dim:#5A5650;
+  --border:rgba(255,255,255,0.07);--border-gold:rgba(196,164,74,0.22);
+  --container:1420px;--padding-x:60px;--header-h:68px;
+  --radius:12px;--radius-lg:20px;--shadow-gold:0 0 40px rgba(196,164,74,0.12);
+  --green:#2ECC71;--red:#E74C3C;--orange:#F39C12;--blue:#3498DB;
+  --green-dim:rgba(46,204,113,0.12);--red-dim:rgba(231,76,60,0.12);
+  --orange-dim:rgba(243,156,18,0.12);--blue-dim:rgba(52,152,219,0.12);
+}
+/* TYPOGRAPHY */
+h1,h2,h3,h4{font-family:'Playfair Display',serif;line-height:1.2;color:var(--white)}
+h1{font-size:clamp(2rem,4vw,3.5rem);font-weight:500}
+h2{font-size:clamp(1.6rem,3vw,2.6rem);font-weight:500}
+h3{font-size:1.3rem;font-weight:500}
+h4{font-size:1.1rem;font-weight:500}
+em{font-style:italic}
+a{color:var(--gold);text-decoration:none}
+a:hover{color:var(--gold-light)}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border-gold);border-radius:3px}
+/* HEADER */
+#header{
+  position:fixed;top:0;left:0;right:0;z-index:100;height:var(--header-h);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 var(--padding-x);background:rgba(9,9,14,0.92);
+  backdrop-filter:blur(20px);border-bottom:1px solid var(--border);
+}
+.logo{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:500;color:var(--white);cursor:pointer;user-select:none}
+.logo em{color:var(--gold);font-style:normal}
+.header-nav{display:flex;align-items:center;gap:8px}
+.nav-lang-group{display:flex;align-items:center;gap:2px;margin-right:8px}
+.nav-lang-btn{background:none;border:none;color:var(--text-muted);font-size:.8rem;font-family:'Inter',sans-serif;padding:4px 8px;cursor:pointer;border-radius:6px;letter-spacing:.05em;transition:color .2s,background .2s}
+.nav-lang-btn:hover,.nav-lang-btn.active{color:var(--gold);background:var(--gold-dim)}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:8px;font-size:.875rem;font-weight:500;cursor:pointer;transition:all .2s;border:none;font-family:'Inter',sans-serif}
+.btn-ghost{background:none;color:var(--text);border:1px solid var(--border)}
+.btn-ghost:hover{border-color:var(--border-gold);color:var(--gold)}
+.btn-gold{background:var(--gold);color:#000;font-weight:600}
+.btn-gold:hover{background:var(--gold-light);transform:translateY(-1px);box-shadow:var(--shadow-gold)}
+.btn-outline-gold{background:none;color:var(--gold);border:1px solid var(--border-gold)}
+.btn-outline-gold:hover{background:var(--gold-dim)}
+.btn-sm{padding:7px 14px;font-size:.8rem}
+.btn-lg{padding:14px 28px;font-size:1rem}
+.btn-danger{background:var(--red-dim);color:var(--red);border:1px solid rgba(231,76,60,0.25)}
+#header-user{display:flex;align-items:center;gap:10px}
+.avatar{width:34px;height:34px;border-radius:50%;background:var(--gold-dim);border:1.5px solid var(--border-gold);display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:600;color:var(--gold);cursor:pointer}
+.header-name{font-size:.85rem;color:var(--text);max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* MAIN */
+#main{padding-top:var(--header-h)}
+.page{display:none;min-height:calc(100vh - var(--header-h))}
+.page.active{display:block}
+/* LANDING */
+.lang-section{display:none}
+.lang-section.active{display:block}
+.hero{
+  min-height:calc(100vh - var(--header-h));
+  display:flex;flex-direction:column;justify-content:center;gap:34px;
+  padding:56px var(--padding-x) 80px;max-width:var(--container);margin:0 auto;
+}
+.hero-left{display:flex;flex-direction:column;gap:22px;align-items:center;text-align:center;max-width:900px;margin:0 auto}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;background:var(--gold-dim);border:1px solid var(--border-gold);border-radius:999px;font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);width:fit-content}
+.hero-tag::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+.hero-title{font-size:clamp(2.1rem,4vw,3.25rem);font-weight:500;line-height:1.12;color:var(--white);max-width:980px}
+.hero-title em{color:var(--gold);font-style:italic}
+.hero-subtitle{color:var(--text-muted);font-size:1rem;line-height:1.7;max-width:760px;min-height:3.4em}
+.hero-subtitle span{display:none}
+.hero-subtitle span.active{display:inline}
+.trust-row{display:flex;flex-wrap:wrap;gap:16px;margin-top:4px}
+.trust-item{display:flex;align-items:center;gap:6px;font-size:.8rem;color:var(--text-muted)}
+.trust-check{display:inline-flex;width:16px;height:16px;border-radius:50%;background:var(--green-dim);border:1px solid rgba(46,204,113,0.3);align-items:center;justify-content:center;font-size:9px;color:var(--green)}
+.trust-check::after{content:'\2713';font-weight:700}
+.hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px}
+.hero-right{display:flex;justify-content:center;align-items:center;width:100%}
+.video-card{
+  position:relative;width:100%;max-width:1100px;
+  aspect-ratio:16/9;min-height:460px;
+  border-radius:26px;overflow:hidden;
+  border:1px solid var(--border-gold);box-shadow:0 0 60px rgba(196,164,74,0.18),0 18px 60px rgba(0,0,0,0.28);background:#000;
+}
+.video-card::after{content:'';position:absolute;inset:auto 0 0 0;height:110px;background:linear-gradient(to top,rgba(0,0,0,.65),transparent);pointer-events:none;}
+.video-card iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+.video-badge{position:absolute;bottom:18px;left:18px;background:rgba(9,9,14,.78);backdrop-filter:blur(12px);border:1px solid var(--border-gold);border-radius:999px;padding:8px 14px;font-size:.75rem;color:#fff;white-space:nowrap;display:flex;align-items:center;gap:6px;z-index:2}
+.video-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pulse 2s infinite}
+.section{padding:80px var(--padding-x);max-width:var(--container);margin:0 auto}
+.section-label{font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;font-weight:600}
+.section-title{font-size:clamp(1.8rem,3vw,2.8rem);margin-bottom:16px}
+.section-sub{color:var(--text-muted);max-width:560px;line-height:1.7}
+.divider{height:1px;background:var(--border);margin:0 var(--padding-x)}
+/* FEATURES */
+.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px}
+.feature-card{padding:32px;background:var(--bg-2);border:1px solid var(--border);border-radius:var(--radius-lg);transition:border-color .3s,transform .3s}
+.feature-card:hover{border-color:var(--border-gold);transform:translateY(-4px)}
+.feature-icon{width:48px;height:48px;border-radius:12px;background:var(--gold-dim);border:1px solid var(--border-gold);display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:20px}
+.feature-card h3{margin-bottom:8px;font-size:1.15rem}
+.feature-card p{color:var(--text-muted);font-size:.9rem;line-height:1.6}
+/* STEPS */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:48px}
+.step{text-align:center;padding:28px 20px;background:var(--bg-2);border:1px solid var(--border);border-radius:var(--radius-lg)}
+.step-num{width:40px;height:40px;border-radius:50%;background:var(--gold-dim);border:1px solid var(--border-gold);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:.85rem;font-weight:700;color:var(--gold)}
+.step h3{font-size:1rem;margin-bottom:6px}
+.step p{color:var(--text-muted);font-size:.85rem}
+/* FOOTER */
+.site-footer{padding:48px var(--padding-x);border-top:1px solid var(--border);max-width:var(--container);margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.site-footer p{color:var(--text-dim);font-size:.8rem}
+.footer-links{display:flex;gap:20px}
+.footer-links a{font-size:.8rem;color:var(--text-dim)}
+.footer-links a:hover{color:var(--gold)}
+/* AUTH MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.75);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:24px}
+.modal-overlay.open{display:flex}
+.modal{width:100%;max-width:440px;background:var(--bg-3);border:1px solid var(--border-gold);border-radius:var(--radius-lg);padding:40px;position:relative;animation:modalIn .25s ease}
+@keyframes modalIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.modal-close{position:absolute;top:16px;right:16px;background:none;border:none;color:var(--text-muted);font-size:1.2rem;cursor:pointer;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:6px}
+.modal-close:hover{background:var(--border);color:var(--white)}
+.modal-logo{margin-bottom:24px}
+.modal-title{font-size:1.6rem;margin-bottom:6px}
+.modal-sub{color:var(--text-muted);font-size:.9rem;margin-bottom:28px}
+.form-group{margin-bottom:18px}
+.form-label{font-size:.8rem;font-weight:500;color:var(--text);margin-bottom:6px;display:block}
+.form-input{width:100%;padding:11px 14px;background:var(--bg-2);border:1px solid var(--border);border-radius:8px;color:var(--white);font-size:.9rem;font-family:'Inter',sans-serif;transition:border-color .2s;outline:none}
+.form-input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(196,164,74,.15)}
+.form-input::placeholder{color:var(--text-dim)}
+.form-error{font-size:.78rem;color:var(--red);margin-top:4px;display:none}
+.form-error.show{display:block}
+.modal-switch{text-align:center;margin-top:20px;font-size:.85rem;color:var(--text-muted)}
+.modal-switch button{background:none;border:none;color:var(--gold);cursor:pointer;font-size:.85rem;font-family:'Inter',sans-serif}
+.demo-hint{background:var(--gold-dim);border:1px solid var(--border-gold);border-radius:8px;padding:10px 14px;font-size:.78rem;color:var(--text-muted);margin-bottom:20px}
+.demo-hint strong{color:var(--gold)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+/* APP LAYOUT */
+.app-layout{display:grid;grid-template-columns:240px 1fr;min-height:calc(100vh - var(--header-h))}
+.sidebar{background:var(--bg-2);border-right:1px solid var(--border);padding:24px 0;position:sticky;top:var(--header-h);height:calc(100vh - var(--header-h));overflow-y:auto}
+.sidebar-section{padding:0 12px;margin-bottom:8px}
+.sidebar-label{font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-dim);padding:0 12px;margin-bottom:4px;font-weight:600}
+.sidebar-nav-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;color:var(--text-muted);font-size:.875rem;cursor:pointer;transition:all .2s;border:none;background:none;width:100%;font-family:'Inter',sans-serif;text-align:left}
+.sidebar-nav-item:hover{background:var(--border);color:var(--text)}
+.sidebar-nav-item.active{background:var(--gold-dim);color:var(--gold);border:1px solid var(--border-gold)}
+.nav-icon{font-size:1.05rem;width:20px;text-align:center}
+.sidebar-badge{margin-left:auto;background:var(--red);color:#fff;font-size:.65rem;padding:2px 6px;border-radius:999px;font-weight:600}
+.app-content{padding:32px 40px;overflow-y:auto}
+/* DASHBOARD */
+.page-header{margin-bottom:28px}
+.page-header h2{font-size:1.8rem;margin-bottom:4px}
+.page-header p{color:var(--text-muted);font-size:.9rem}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px}
+.kpi-card{background:var(--bg-3);border:1px solid var(--border);border-radius:var(--radius);padding:20px;transition:border-color .3s}
+.kpi-card:hover{border-color:var(--border-gold)}
+.kpi-label{font-size:.75rem;color:var(--text-muted);font-weight:500;letter-spacing:.04em;margin-bottom:8px}
+.kpi-value{font-size:1.6rem;font-family:'Playfair Display',serif;color:var(--white);font-weight:500}
+.kpi-sub{font-size:.75rem;color:var(--text-dim);margin-top:4px}
+.kpi-change{font-size:.75rem;margin-top:4px}
+.kpi-change.good{color:var(--green)}
+.kpi-change.warn{color:var(--orange)}
+.score-section{display:grid;grid-template-columns:1fr 2fr;gap:20px;margin-bottom:28px}
+.score-card{background:var(--bg-3);border:1px solid var(--border);border-radius:var(--radius);padding:24px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.score-ring{position:relative;width:100px;height:100px;margin-bottom:12px}
+.score-ring svg{transform:rotate(-90deg)}
+.score-ring circle{fill:none;stroke-width:8}
+.score-bg-circle{stroke:var(--border)}
+.score-fill-circle{stroke:var(--gold);stroke-linecap:round;stroke-dasharray:283;transition:stroke-dashoffset 1s ease}
+.score-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-family:'Playfair Display',serif;color:var(--white)}
+.score-label{font-size:.85rem;color:var(--text-muted);margin-bottom:4px}
+.score-desc{font-size:.75rem;color:var(--text-dim)}
+.gap-card{background:var(--bg-3);border:1px solid var(--border);border-radius:var(--radius);padding:24px}
+.gap-card h4{font-size:1rem;margin-bottom:14px;font-family:'Inter',sans-serif;font-weight:600;color:var(--text)}
+.gap-list{display:flex;flex-direction:column;gap:8px}
+.gap-item{display:flex;align-items:center;gap:10px;padding:10px;background:var(--bg-2);border-radius:8px;font-size:.85rem}
+.gap-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.gap-dot.red{background:var(--red)}
+.gap-dot.orange{background:var(--orange)}
+.gap-dot.green{background:var(--green)}
+.gap-name{flex:1;color:var(--text)}
+.gap-badge{font-size:.7rem;padding:2px 8px;border-radius:999px;font-weight:600}
+.gap-badge.missing{background:var(--red-dim);color:var(--red)}
+.gap-badge.partial{background:var(--orange-dim);color:var(--orange)}
+.gap-badge.ok{background:var(--green-dim);color:var(--green)}
+.quick-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:28px}
+.action-card{background:var(--bg-3);border:1px solid var(--border);border-radius:var(--radius);padding:20px;cursor:pointer;transition:all .2s;text-align:center}
+.action-card:hover{border-color:var(--border-gold);transform:translateY(-2px)}
+.action-icon{font-size:1.5rem;margin-bottom:8px}
+.action-label{font-size:.85rem;color:var(--text);font-weight:500}
+.action-sub{font-size:.75rem;color:var(--text-dim);margin-top:2px}
+.recent-activity{background:var(--bg-3);border:1px solid var(--border);border-radius:var(--radius);padding:24px}
+.recent-activity h4{font-size:1rem;font-family:'Inter',sans-serif;font-weight:600;color:var(--text);margin-bottom:16px}
+.activity-list{display:flex;flex-direction:column;gap:10px}
+.activity-item{display:flex;align-items:center;gap:12px;padding:10px;background:var(--bg-2);border-radius:8px;font-size:.85rem}
+.activity-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;background:var(--gold)}
+.activity-text{flex:1;color:var(--text)}
+.activity-time{font-size:.75rem;color:var(--text-dim)}
+/* POLICIES */
+.policy-toolbar{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.policy-toolbar .form-input{max-width:280px}
+.policy-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.policy-card{background:var(--bg-3);border:1px solid var(--border);border-radius:var(--radius);padding:20px;transition:border-color .3s}
+.policy-card:hover{border-color:var(--border-gold)}
+.policy-card-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px}
+.policy-type-badge{font-size:.7rem;padding:3px 10px;border-radius:999px;font-weight:600;letter-spacing:.04em}
+.badge-kranken{background:rgba(52,152,219,0.15);color:var(--blue)}
+.badge-auto{background:rgba(46,204,113,0.12);color:var(--green)}
+.badge-hausrat{background:rgba(243,156,18,0.12);color:var(--orange)}
+.badge-haftpflicht{background:var(--gold-dim);color:var(--gold)}
+.badge-leben{background:rgba(155,89,182,0.15);color:#9B59B6}
+.badge-reise{background:rgba(26,188,156,0.15);color:#1ABC9C}
+.policy-menu{background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:1rem;padding:4px 8px;border-radius:6px}
+.policy-menu:hover{background:var(--border);color:var(--red)}
+.policy-name{font-size:1.05rem;font-family:'Playfair Display',serif;margin-bottom:4px}
+.policy-insurer{font-size:.8rem;color:var(--text-muted);margin-bottom:14px}
+.policy-meta{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.policy-meta-item{background:var(--bg-2);border-radius:6px;padding:8px 10px}
+.policy-meta-key{font-size:.68rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px}
+.policy-meta-val{font-size:.9rem;color:var(--text);font-weight:500}
+.policy-score-bar{margin-top:12px;height:4px;background:var(--border);border-radius:2px;overflow:hidden}
+.policy-score-fill{height:100%;background:var(--gold);border-radius:2px;transition:width 1s ease}
+.empty-state{text-align:center;padding:60px 20px}
+.empty-icon{font-size:3rem;margin-bottom:16px;opacity:.4}
+.empty-title{font-size:1.2rem;margin-bottom:8px}
+.empty-sub{color:var(--text-muted);font-size:.9rem;margin-bottom:24px}
+/* ADD POLICY MODAL */
+.add-policy-modal{max-width:540px}
+.policy-type-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:20px}
+.policy-type-btn{padding:12px 8px;background:var(--bg-2);border:1px solid var(--border);border-radius:8px;color:var(--text-muted);font-size:.78rem;cursor:pointer;text-align:center;transition:all .2s;font-family:'Inter',sans-serif}
+.policy-type-btn:hover,.policy-type-btn.selected{border-color:var(--border-gold);color:var(--gold);background:var(--gold-dim)}
+.policy-type-icon{font-size:1.3rem;display:block;margin-bottom:4px}
+/* ANALYSIS */
+.analysis-hero{background:var(--bg-2);border:1px solid var(--border-gold);border-radius:var(--radius-lg);padding:32px;margin-bottom:24px;display:flex;align-items:center;gap:32px}
+.analysis-score-wrap{flex-shrink:0}
+.analysis-score-ring{position:relative;width:120px;height:120px}
+.analysis-score-ring svg{transform:rotate(-90deg)}
+.analysis-score-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-family:'Playfair Display',serif;color:var(--white)}
+.analysis-text h2{font-size:1.5rem;margin-bottom:6px}
+.analysis-text p{color:var(--text-muted);font-size:.9rem;max-width:600px}
+.score-breakdown{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:12px}
+.score-metric{background:var(--bg-3);border:1px solid var(--border);border-radius:8px;padding:12px;text-align:center}
+.score-metric-val{font-size:1rem;font-weight:600;margin-bottom:2px}
+.score-metric-val.good{color:var(--green)}
+.score-metric-val.warn{color:var(--orange)}
+.score-metric-val.bad{color:var(--red)}
+.score-metric-label{font-size:.72rem;color:var(--text-dim)}
+.analysis-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px}
+.analysis-card{background:var(--bg-3);border:1px solid var(--border);border-radius:var(--radius);padding:24px}
+.analysis-card h4{font-size:.95rem;font-family:'Inter',sans-serif;font-weight:600;color:var(--text);margin-bottom:14px}
+.policy-analysis-list{display:flex;flex-direction:column;gap:10px}
+.policy-analysis-item{padding:12px;background:var(--bg-2);border-radius:8px;display:flex;align-items:center;gap:12px}
+.pai-icon{font-size:1.1rem;width:36px;height:36px;border-radius:8px;background:var(--bg-3);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.pai-info{flex:1}
+.pai-name{font-size:.9rem;font-weight:500;color:var(--text);margin-bottom:2px}
+.pai-detail{font-size:.75rem;color:var(--text-muted)}
+.pai-score{text-align:right}
+.pai-score-num{font-size:.9rem;font-weight:600}
+.pai-score-bar{height:3px;width:60px;background:var(--border);border-radius:2px;margin-top:4px}
+.pai-score-fill{height:100%;border-radius:2px}
+.gap-analysis-full{display:flex;flex-direction:column;gap:10px}
+.gap-full-item{padding:14px;background:var(--bg-2);border-radius:8px;border-left:3px solid transparent}
+.gap-full-item.missing{border-left-color:var(--red)}
+.gap-full-item.partial{border-left-color:var(--orange)}
+.gap-full-item.ok{border-left-color:var(--green)}
+.gap-full-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.gap-full-title{font-size:.9rem;font-weight:500;color:var(--text)}
+.gap-full-desc{font-size:.78rem;color:var(--text-muted)}
+/* RECOMMENDATIONS */
+.rec-summary{background:linear-gradient(135deg,rgba(196,164,74,0.12),rgba(196,164,74,0.04));border:1px solid var(--border-gold);border-radius:var(--radius-lg);padding:28px;margin-bottom:24px}
+.rec-summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.rec-summary-item{text-align:center}
+.rec-summary-val{font-size:1.8rem;font-family:'Playfair Display',serif;color:var(--gold);display:block;margin-bottom:4px}
+.rec-summary-label{font-size:.8rem;color:var(--text-muted)}
+.rec-list{display:flex;flex-direction:column;gap:16px}
+.rec-card{background:var(--bg-3);border:1px solid var(--border);border-radius:var(--radius);padding:24px;transition:border-color .3s}
+.rec-card:hover{border-color:var(--border-gold)}
+.rec-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;gap:12px}
+.rec-priority{font-size:.68rem;font-weight:600;padding:3px 10px;border-radius:999px;letter-spacing:.06em}
+.priority-high{background:var(--red-dim);color:var(--red)}
+.priority-medium{background:var(--orange-dim);color:var(--orange)}
+.priority-low{background:var(--green-dim);color:var(--green)}
+.rec-card h3{font-size:1.1rem;margin-bottom:6px}
+.rec-card p{font-size:.88rem;color:var(--text-muted);margin-bottom:14px;line-height:1.6}
+.rec-meta{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:14px}
+.rec-meta-item{display:flex;align-items:center;gap:6px;font-size:.82rem;color:var(--text-muted)}
+.rec-meta-item strong{color:var(--text)}
+.rec-footer{display:flex;align-items:center;justify-content:space-between;padding-top:14px;border-top:1px solid var(--border)}
+.rec-saving{font-size:.85rem;color:var(--green);font-weight:600}
+.rec-providers{display:flex;gap:8px}
+.provider-chip{font-size:.72rem;padding:3px 10px;background:var(--bg-2);border:1px solid var(--border);border-radius:999px;color:var(--text-muted)}
+/* TOAST */
+.toast-wrap{position:fixed;bottom:24px;right:24px;z-index:999;display:flex;flex-direction:column;gap:8px}
+.toast{padding:12px 18px;border-radius:10px;font-size:.85rem;backdrop-filter:blur(12px);border:1px solid;animation:toastIn .3s ease,toastOut .3s ease 2.7s forwards;max-width:320px}
+.toast.success{background:rgba(46,204,113,0.12);border-color:rgba(46,204,113,0.3);color:var(--green)}
+.toast.error{background:var(--red-dim);border-color:rgba(231,76,60,0.3);color:var(--red)}
+.toast.info{background:var(--gold-dim);border-color:var(--border-gold);color:var(--gold)}
+@keyframes toastIn{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:translateX(0)}}
+@keyframes toastOut{from{opacity:1}to{opacity:0;transform:translateX(40px)}}
+/* RESPONSIVE */
+@media(max-width:1100px){:root{--padding-x:32px}.hero{grid-template-columns:1fr;gap:36px}.hero-right{order:-1}.video-card{max-width:100%;min-height:0}.kpi-grid{grid-template-columns:repeat(2,1fr)}.analysis-grid{grid-template-columns:1fr}.feature-grid{grid-template-columns:repeat(2,1fr)}.steps{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:900px){.app-layout{grid-template-columns:1fr}.sidebar{display:none}}
+@media(max-width:768px){:root{--padding-x:20px;--header-h:58px}.hero{grid-template-columns:1fr;gap:28px;padding:36px var(--padding-x)}.hero-right{order:-1}.video-card{max-width:100%;aspect-ratio:16/9;min-height:220px}.kpi-grid{grid-template-columns:1fr 1fr}.quick-actions{grid-template-columns:1fr}.policy-grid{grid-template-columns:1fr}.score-section{grid-template-columns:1fr}.analysis-hero{flex-direction:column;text-align:center}.rec-summary-grid{grid-template-columns:1fr}.feature-grid{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}.form-row{grid-template-columns:1fr}.site-footer{flex-direction:column;text-align:center}#header{padding:0 20px}.header-name{display:none}}
+@media(max-width:480px){.kpi-grid{grid-template-columns:1fr}.policy-type-grid{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<header id="header">
+  <div class="logo" onclick="App.goHome()">Nav<em>ia.</em></div>
+  <nav class="header-nav" id="header-nav">
+    <div class="nav-lang-group" id="lang-switcher">
+      <button class="nav-lang-btn active" onclick="App.setLang('de')">DE</button>
+      <button class="nav-lang-btn" onclick="App.setLang('fr')">FR</button>
+      <button class="nav-lang-btn" onclick="App.setLang('it')">IT</button>
+    </div>
+    <div id="header-auth" style="display:flex;gap:8px">
+      <button class="btn btn-ghost btn-sm" onclick="Auth.showLogin()">Anmelden</button>
+      <button class="btn btn-gold btn-sm" onclick="Auth.showRegister()">Kostenlos starten</button>
+    </div>
+    <div id="header-user" style="display:none;align-items:center;gap:10px">
+      <span class="header-name" id="header-username"></span>
+      <div class="avatar" id="user-avatar" onclick="App.navigate('dashboard')">?</div>
+      <button class="btn btn-ghost btn-sm" onclick="Auth.logout()">Abmelden</button>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+<!-- LANDING -->
+<div id="page-landing" class="page active">
+
+<!-- DE -->
+<div class="lang-section active" id="lang-de">
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">Für die Schweiz · DE / FR / IT</div>
+    <h1 class="hero-title">Ihre persönliche<br/><em>Versicherungsberatung</em><br/>für die Schweiz</h1>
+    <p class="hero-subtitle" id="de-subtitle">
+      <span class="active">Willkommen. Ich bin Navia, Ihre digitale Versicherungsberaterin.</span>
+      <span>Ich analysiere Ihren gesamten Versicherungsschutz – in Minuten.</span>
+      <span>Ich erkenne Lücken, spare Ihnen Geld und empfehle bessere Lösungen.</span>
+      <span>Massgeschneiderte Beratung – digital, unabhängig und transparent.</span>
+    </p>
+    <div class="trust-row">
+      <span class="trust-item"><span class="trust-check" aria-hidden="true"></span>Datenschutzkonform</span>
+      <span class="trust-item"><span class="trust-check" aria-hidden="true"></span>Unabhängig</span>
+      <span class="trust-item"><span class="trust-check" aria-hidden="true"></span>Kostenlos</span>
+      <span class="trust-item"><span class="trust-check" aria-hidden="true"></span>Swiss Made</span>
+    </div>
+    <div class="hero-cta">
+      <button class="btn btn-gold btn-lg" onclick="Auth.showRegister()">Jetzt kostenlos starten &#8594;</button>
+      <button class="btn btn-ghost btn-lg" onclick="Auth.showLogin()">Anmelden</button>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="video-card">
+      <iframe class="lang-video" data-lang="de" data-video-src="https://app.heygen.com/embeds/4ed4dee25b794cd48260900b48e899eb?autoplay=1&loop=0&muted=0" src="https://app.heygen.com/embeds/4ed4dee25b794cd48260900b48e899eb?autoplay=1&loop=0&muted=0" title="Navia DE" allowfullscreen allow="autoplay; encrypted-media; microphone; camera; fullscreen; picture-in-picture"></iframe>
+      <div class="video-badge">KI-Beraterin Navia</div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+<section class="section">
+  <div class="section-label">Warum Navia?</div>
+  <h2 class="section-title">Ihr Versicherungsschutz &#8211;<br/><em>intelligent analysiert</em></h2>
+  <p class="section-sub">Navia prüft alle Ihre Policen, erkennt Lücken und findet bessere Konditionen – vollautomatisch.</p>
+  <div class="feature-grid">
+    <div class="feature-card"><div class="feature-icon">&#128269;</div><h3>Vollständige Analyse</h3><p>Alle Ihre Versicherungen in einer Übersicht – vollständig analysiert und bewertet.</p></div>
+    <div class="feature-card"><div class="feature-icon">&#9889;</div><h3>Lückenerkennung</h3><p>Automatische Erkennung von Deckungslücken – bevor etwas passiert.</p></div>
+    <div class="feature-card"><div class="feature-icon">&#128176;</div><h3>Sparpotenzial</h3><p>Durchschnittlich CHF 480 Ersparnis pro Jahr durch optimierten Schutz.</p></div>
+  </div>
+</section>
+<div class="divider"></div>
+<section class="section">
+  <div class="section-label">So funktioniert es</div>
+  <h2 class="section-title">In vier Schritten zu Ihrem <em>optimalen Schutz</em></h2>
+  <div class="steps">
+    <div class="step"><div class="step-num">1</div><h3>Registrieren</h3><p>Kostenlos anmelden</p></div>
+    <div class="step"><div class="step-num">2</div><h3>Policen erfassen</h3><p>Versicherungen eingeben</p></div>
+    <div class="step"><div class="step-num">3</div><h3>Analysieren</h3><p>KI prüft Schutz</p></div>
+    <div class="step"><div class="step-num">4</div><h3>Optimieren</h3><p>Bessere Angebote</p></div>
+  </div>
+</section>
+<footer class="site-footer">
+  <p>&#169; 2025 Navia &#8211; Intelligente Versicherungsberatung</p>
+  <div class="footer-links"><a href="#">Datenschutz</a><a href="#">Impressum</a><a href="#">AGB</a></div>
+</footer>
+</div>
+
+<!-- FR -->
+<div class="lang-section" id="lang-fr">
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">Pour la Suisse · DE / FR / IT</div>
+    <h1 class="hero-title">Votre conseill&#232;re<br/><em>digitale</em><br/>en assurances pour la Suisse</h1>
+    <p class="hero-subtitle" id="fr-subtitle">
+      <span class="active">Bienvenue. Je suis Navia, votre conseill&#232;re digitale en assurances.</span>
+      <span>J&#8217;analyse l&#8217;ensemble de vos assurances &#8211; en quelques minutes.</span>
+      <span>Je d&#233;tecte les lacunes, &#233;conomise votre argent et recommande de meilleures solutions.</span>
+      <span>Conseil sur mesure &#8211; ind&#233;pendant, digital, transparent.</span>
+    </p>
+    <div class="trust-row">
+      <span class="trust-item"><span class="trust-check" aria-hidden="true"></span>Conforme RGPD</span>
+      <span class="trust-item"><span class="trust-check" aria-hidden="true"></span>Ind&#233;pendante</span>
+      <span class="trust-item"><span class="trust-check" aria-hidden="true"></span>Gratuite</span>
+      <span class="trust-item"><span class="trust-check" aria-hidden="true"></span>Swiss Made</span>
+    </div>
+    <div class="hero-cta">
+      <button class="btn btn-gold btn-lg" onclick="Auth.showRegister()">Commencer gratuitement &#8594;</button>
+      <button class="btn btn-ghost btn-lg" onclick="Auth.showLogin()">Se connecter</button>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="video-card">
+      <iframe class="lang-video" data-lang="fr" data-video-src="https://app.heygen.com/embeds/b0783a89e3ae4810bd3f2734ffe6091f?autoplay=1&loop=0&muted=0" src="about:blank" title="Navia FR" allowfullscreen allow="autoplay; encrypted-media; microphone; camera; fullscreen; picture-in-picture"></iframe>
+      <div class="video-badge">Conseill&#232;re IA Navia</div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+<section class="section">
+  <div class="section-label">Pourquoi Navia?</div>
+  <h2 class="section-title">Votre couverture &#8211;<br/><em>analys&#233;e intelligemment</em></h2>
+  <p class="section-sub">Navia examine toutes vos polices, d&#233;tecte les lacunes et trouve de meilleures conditions &#8211; automatiquement.</p>
+  <div class="feature-grid">
+    <div class="feature-card"><div class="feature-icon">&#128269;</div><h3>Analyse compl&#232;te</h3><p>Toutes vos assurances en un coup d&#8217;&#339;il &#8211; enti&#232;rement analys&#233;es.</p></div>
+    <div class="feature-card"><div class="feature-icon">&#9889;</div><h3>D&#233;tection des lacunes</h3><p>Identification automatique des lacunes de couverture.</p></div>
+    <div class="feature-card"><div class="feature-icon">&#128176;</div><h3>Potentiel d&#8217;&#233;conomies</h3><p>En moyenne CHF 480 d&#8217;&#233;conomies par an.</p></div>
+  </div>
+</section>
+<footer class="site-footer">
+  <p>&#169; 2025 Navia &#8211; Conseil en assurances intelligent</p>
+  <div class="footer-links"><a href="#">Protection des donn&#233;es</a><a href="#">Mentions l&#233;gales</a><a href="#">CGU</a></div>
+</footer>
+</div>
+
+<!-- IT -->
+<div class="lang-section" id="lang-it">
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">Per la Svizzera · DE / FR / IT</div>
+    <h1 class="hero-title">La tua consulenza<br/><em>assicurativa personalizzata</em><br/>per la Svizzera</h1>
+    <p class="hero-subtitle" id="it-subtitle">
+      <span class="active">Benvenuto. Sono Navia, la tua consulente digitale assicurativa.</span>
+      <span>Analizzo tutte le tue assicurazioni &#8211; in pochi minuti.</span>
+      <span>Individuo le lacune, risparmio il tuo denaro e raccomando soluzioni migliori.</span>
+      <span>Consulenza su misura &#8211; indipendente, digitale, trasparente.</span>
+    </p>
+    <div class="trust-row">
+      <span class="trust-item"><span class="trust-check" aria-hidden="true"></span>Protezione dati</span>
+      <span class="trust-item"><span class="trust-check" aria-hidden="true"></span>Indipendente</span>
+      <span class="trust-item"><span class="trust-check" aria-hidden="true"></span>Gratuita</span>
+      <span class="trust-item"><span class="trust-check" aria-hidden="true"></span>Swiss Made</span>
+    </div>
+    <div class="hero-cta">
+      <button class="btn btn-gold btn-lg" onclick="Auth.showRegister()">Inizia gratuitamente &#8594;</button>
+      <button class="btn btn-ghost btn-lg" onclick="Auth.showLogin()">Accedi</button>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="video-card">
+      <iframe class="lang-video" data-lang="it" data-video-src="https://app.heygen.com/embeds/adced7c2ecf34c1a9c5c326f41a66ddb?autoplay=1&loop=0&muted=0" src="about:blank" title="Navia IT" allowfullscreen allow="autoplay; encrypted-media; microphone; camera; fullscreen; picture-in-picture"></iframe>
+      <div class="video-badge">Consulente AI Navia</div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+<section class="section">
+  <div class="section-label">Perch&#233; Navia?</div>
+  <h2 class="section-title">La tua copertura &#8211;<br/><em>analizzata in modo intelligente</em></h2>
+  <p class="section-sub">Navia esamina tutte le tue polizze, rileva le lacune e trova condizioni migliori &#8211; automaticamente.</p>
+  <div class="feature-grid">
+    <div class="feature-card"><div class="feature-icon">&#128269;</div><h3>Analisi completa</h3><p>Tutte le tue assicurazioni in un&#8217;unica panoramica &#8211; completamente analizzate.</p></div>
+    <div class="feature-card"><div class="feature-icon">&#9889;</div><h3>Rilevamento lacune</h3><p>Identificazione automatica delle lacune di copertura.</p></div>
+    <div class="feature-card"><div class="feature-icon">&#128176;</div><h3>Potenziale di risparmio</h3><p>In media CHF 480 di risparmio all&#8217;anno.</p></div>
+  </div>
+</section>
+<footer class="site-footer">
+  <p>&#169; 2025 Navia &#8211; Consulenza assicurativa intelligente</p>
+  <div class="footer-links"><a href="#">Privacy</a><a href="#">Note legali</a><a href="#">CGC</a></div>
+</footer>
+</div>
+</div><!-- /page-landing -->
+
+<!-- APP -->
+<div id="page-app" class="page" style="display:none">
+  <div class="app-layout">
+    <aside class="sidebar" id="app-sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-label">Navigation</div>
+        <button class="sidebar-nav-item active" data-route="dashboard" onclick="App.navigate('dashboard')">
+          <span class="nav-icon">&#128202;</span> Dashboard
+        </button>
+        <button class="sidebar-nav-item" data-route="policies" onclick="App.navigate('policies')">
+          <span class="nav-icon">&#128193;</span> Meine Policen
+        </button>
+        <button class="sidebar-nav-item" data-route="analysis" onclick="App.navigate('analysis')">
+          <span class="nav-icon">&#128269;</span> Analyse
+        </button>
+        <button class="sidebar-nav-item" data-route="recommendations" onclick="App.navigate('recommendations')">
+          <span class="nav-icon">&#128161;</span> Empfehlungen
+          <span class="sidebar-badge">3</span>
+        </button>
+      </div>
+      <div class="sidebar-section" style="margin-top:24px;padding-top:16px;border-top:1px solid var(--border)">
+        <button class="sidebar-nav-item" onclick="Auth.logout()">
+          <span class="nav-icon">&#128682;</span> Abmelden
+        </button>
+      </div>
+    </aside>
+
+    <div class="app-content" id="app-content">
+
+      <!-- DASHBOARD -->
+      <div id="view-dashboard" class="app-view">
+        <div class="page-header">
+          <h2 id="dash-greeting">Guten Tag</h2>
+          <p>Hier ist Ihr aktueller Versicherungsüberblick.</p>
+        </div>
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-label">&#128737; Aktive Policen</div>
+            <div class="kpi-value" id="kpi-policies">4</div>
+            <div class="kpi-sub">Versicherungen erfasst</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">&#128182; Monatsprämie</div>
+            <div class="kpi-value" id="kpi-premium">CHF 509</div>
+            <div class="kpi-sub">Total pro Monat</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">&#9888; Deckungslücken</div>
+            <div class="kpi-value" id="kpi-gaps" style="color:var(--orange)">3</div>
+            <div class="kpi-sub">Handlungsbedarf</div>
+            <div class="kpi-change warn">Analyse empfohlen</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">&#128176; Sparpotenzial</div>
+            <div class="kpi-value" id="kpi-savings" style="color:var(--green)">CHF 45</div>
+            <div class="kpi-sub">Pro Monat möglich</div>
+            <div class="kpi-change good">+CHF 540/Jahr</div>
+          </div>
+        </div>
+        <div class="score-section">
+          <div class="score-card">
+            <div class="score-ring">
+              <svg width="100" height="100" viewBox="0 0 100 100">
+                <circle class="score-bg-circle" cx="50" cy="50" r="45"/>
+                <circle class="score-fill-circle" id="score-circle" cx="50" cy="50" r="45" stroke-dashoffset="90"/>
+              </svg>
+              <div class="score-num">68</div>
+            </div>
+            <div class="score-label">Deckungsgrad</div>
+            <div class="score-desc">von 100 Punkten</div>
+          </div>
+          <div class="gap-card">
+            <h4>Erkannte Lücken &amp; Status</h4>
+            <div class="gap-list">
+              <div class="gap-item"><div class="gap-dot red"></div><span class="gap-name">Rechtsschutz</span><span class="gap-badge missing">Fehlend</span></div>
+              <div class="gap-item"><div class="gap-dot red"></div><span class="gap-name">Reiseversicherung</span><span class="gap-badge missing">Fehlend</span></div>
+              <div class="gap-item"><div class="gap-dot orange"></div><span class="gap-name">Hausrat (CHF 80k)</span><span class="gap-badge partial">Unzureichend</span></div>
+              <div class="gap-item"><div class="gap-dot green"></div><span class="gap-name">Krankenkasse</span><span class="gap-badge ok">Gedeckt</span></div>
+              <div class="gap-item"><div class="gap-dot green"></div><span class="gap-name">Haftpflicht</span><span class="gap-badge ok">Gedeckt</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="quick-actions">
+          <div class="action-card" onclick="App.navigate('policies');setTimeout(()=>Policies.openAddModal(),200)">
+            <div class="action-icon">&#43;</div>
+            <div class="action-label">Police hinzufügen</div>
+            <div class="action-sub">Neue Versicherung erfassen</div>
+          </div>
+          <div class="action-card" onclick="App.navigate('analysis')">
+            <div class="action-icon">&#128269;</div>
+            <div class="action-label">Analyse starten</div>
+            <div class="action-sub">Vollständige Prüfung</div>
+          </div>
+          <div class="action-card" onclick="App.navigate('recommendations')">
+            <div class="action-icon">&#128161;</div>
+            <div class="action-label">Empfehlungen</div>
+            <div class="action-sub">3 neue Angebote</div>
+          </div>
+        </div>
+        <div class="recent-activity">
+          <h4>Letzte Aktivitäten</h4>
+          <div class="activity-list">
+            <div class="activity-item"><div class="activity-dot"></div><span class="activity-text">Analyse abgeschlossen &#8211; 3 Lücken gefunden</span><span class="activity-time">Heute</span></div>
+            <div class="activity-item"><div class="activity-dot"></div><span class="activity-text">Demo-Daten geladen (4 Policen)</span><span class="activity-time">Heute</span></div>
+            <div class="activity-item"><div class="activity-dot"></div><span class="activity-text">Konto erfolgreich erstellt</span><span class="activity-time">Heute</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- POLICIES -->
+      <div id="view-policies" class="app-view" style="display:none">
+        <div class="page-header" style="display:flex;justify-content:space-between;align-items:flex-start">
+          <div>
+            <h2>Meine Policen</h2>
+            <p>Verwalten Sie alle Ihre Versicherungen an einem Ort.</p>
+          </div>
+          <button class="btn btn-gold" onclick="Policies.openAddModal()">&#43; Police hinzufügen</button>
+        </div>
+        <div class="policy-toolbar">
+          <input class="form-input" type="search" placeholder="Policen durchsuchen&#8230;" oninput="Policies.filter(this.value)" id="policy-search"/>
+        </div>
+        <div class="policy-grid" id="policy-grid"></div>
+      </div>
+
+      <!-- ANALYSIS -->
+      <div id="view-analysis" class="app-view" style="display:none">
+        <div class="page-header">
+          <h2>Versicherungsanalyse</h2>
+          <p>KI-gestützte Bewertung Ihres Versicherungsschutzes.</p>
+        </div>
+        <div class="analysis-hero">
+          <div class="analysis-score-wrap">
+            <div class="analysis-score-ring">
+              <svg width="120" height="120" viewBox="0 0 120 120">
+                <circle fill="none" stroke="var(--border)" stroke-width="10" cx="60" cy="60" r="50"/>
+                <circle fill="none" stroke="var(--gold)" stroke-width="10" stroke-linecap="round" cx="60" cy="60" r="50" stroke-dasharray="314" stroke-dashoffset="100" id="analysis-circle"/>
+              </svg>
+              <div class="analysis-score-num">68</div>
+            </div>
+          </div>
+          <div class="analysis-text">
+            <h2>Deckungsgrad: <em>68/100</em></h2>
+            <p>Ihr Versicherungsschutz ist grundlegend vorhanden, aber es bestehen relevante Lücken. Mit den empfohlenen Anpassungen könnte Ihr Score auf 91 steigen.</p>
+            <div class="score-breakdown">
+              <div class="score-metric"><div class="score-metric-val good">&#10003; Gut</div><div class="score-metric-label">Krankenkasse</div></div>
+              <div class="score-metric"><div class="score-metric-val good">&#10003; Gut</div><div class="score-metric-label">Haftpflicht</div></div>
+              <div class="score-metric"><div class="score-metric-val warn">&#9888; Lücke</div><div class="score-metric-label">Hausrat</div></div>
+              <div class="score-metric"><div class="score-metric-val bad">&#10007; Fehlt</div><div class="score-metric-label">Rechtsschutz</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="analysis-grid">
+          <div class="analysis-card">
+            <h4>&#128203; Policen-Bewertung</h4>
+            <div class="policy-analysis-list" id="policy-analysis-list"></div>
+          </div>
+          <div class="analysis-card">
+            <h4>&#9888; Deckungslücken im Detail</h4>
+            <div class="gap-analysis-full">
+              <div class="gap-full-item missing">
+                <div class="gap-full-header"><span class="gap-full-title">Rechtsschutz</span><span class="gap-badge missing">Fehlend</span></div>
+                <div class="gap-full-desc">Kein Rechtsschutz vorhanden. Bei Rechtsstreitigkeiten entstehen hohe Kosten. Empfehlung: ab CHF 20/Mt.</div>
+              </div>
+              <div class="gap-full-item missing">
+                <div class="gap-full-header"><span class="gap-full-title">Reiseversicherung</span><span class="gap-badge missing">Fehlend</span></div>
+                <div class="gap-full-desc">Reiseabbruch, Gepäckverlust und Auslandskrankheit sind nicht gedeckt. Empfehlung: ab CHF 10/Mt.</div>
+              </div>
+              <div class="gap-full-item partial">
+                <div class="gap-full-header"><span class="gap-full-title">Hausrat – Unterversicherung</span><span class="gap-badge partial">Unzureichend</span></div>
+                <div class="gap-full-desc">Aktuelle Deckung CHF 80'000 – empfohlen mind. CHF 120'000. Prämienerhöhung ca. CHF 8/Mt.</div>
+              </div>
+              <div class="gap-full-item ok">
+                <div class="gap-full-header"><span class="gap-full-title">Krankenkasse (OKP)</span><span class="gap-badge ok">Ausreichend</span></div>
+                <div class="gap-full-desc">Grundversicherung vorhanden. Optimierungspotenzial CHF 45/Mt bei Anbieterwechsel.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RECOMMENDATIONS -->
+      <div id="view-recommendations" class="app-view" style="display:none">
+        <div class="page-header">
+          <h2>Empfehlungen</h2>
+          <p>Personalisierte Vorschläge zur Optimierung Ihres Versicherungsschutzes.</p>
+        </div>
+        <div class="rec-summary">
+          <div class="rec-summary-grid">
+            <div class="rec-summary-item"><span class="rec-summary-val">3</span><span class="rec-summary-label">Empfehlungen für Sie</span></div>
+            <div class="rec-summary-item"><span class="rec-summary-val" style="color:var(--green)">CHF 45</span><span class="rec-summary-label">Einsparung pro Monat</span></div>
+            <div class="rec-summary-item"><span class="rec-summary-val">+23</span><span class="rec-summary-label">Score-Punkte möglich</span></div>
+          </div>
+        </div>
+        <div class="rec-list">
+          <div class="rec-card">
+            <div class="rec-card-header">
+              <div>
+                <span class="rec-priority priority-high">DRINGEND</span>
+                <h3>Rechtsschutz abschliessen</h3>
+              </div>
+              <button class="btn btn-gold btn-sm" onclick="UI.toast('Angebot angefordert!','success')">Angebot anfragen</button>
+            </div>
+            <p>Sie haben keinen Rechtsschutz. Bei Streitigkeiten in Miet-, Arbeits- oder Verkehrssachen können Anwaltskosten schnell CHF 5'000–20'000 erreichen.</p>
+            <div class="rec-meta">
+              <div class="rec-meta-item">&#128182; <strong>ab CHF 20/Mt</strong></div>
+              <div class="rec-meta-item">&#128737; <strong>Privat + Verkehr + Miete</strong></div>
+              <div class="rec-meta-item">&#11088; <strong>Score +10 Punkte</strong></div>
+            </div>
+            <div class="rec-footer">
+              <span class="rec-saving">Schutzwert: bis CHF 20'000</span>
+              <div class="rec-providers"><span class="provider-chip">TCS</span><span class="provider-chip">Dextra</span><span class="provider-chip">CAP</span></div>
+            </div>
+          </div>
+          <div class="rec-card">
+            <div class="rec-card-header">
+              <div>
+                <span class="rec-priority priority-high">EMPFOHLEN</span>
+                <h3>Reiseversicherung hinzufügen</h3>
+              </div>
+              <button class="btn btn-gold btn-sm" onclick="UI.toast('Angebot angefordert!','success')">Angebot anfragen</button>
+            </div>
+            <p>Ohne Reiseversicherung sind Sie bei Annullierungen, Krankheit im Ausland oder Gepäckverlust nicht geschützt.</p>
+            <div class="rec-meta">
+              <div class="rec-meta-item">&#128182; <strong>ab CHF 10/Mt</strong></div>
+              <div class="rec-meta-item">&#9992; <strong>Welt + Annullation</strong></div>
+              <div class="rec-meta-item">&#11088; <strong>Score +8 Punkte</strong></div>
+            </div>
+            <div class="rec-footer">
+              <span class="rec-saving">Schutzwert: bis CHF 30'000</span>
+              <div class="rec-providers"><span class="provider-chip">Elvia</span><span class="provider-chip">Helvetia</span><span class="provider-chip">Allianz</span></div>
+            </div>
+          </div>
+          <div class="rec-card">
+            <div class="rec-card-header">
+              <div>
+                <span class="rec-priority priority-medium">SPAREN</span>
+                <h3>Krankenkasse optimieren</h3>
+              </div>
+              <button class="btn btn-outline-gold btn-sm" onclick="UI.toast('Vergleich wird geladen&#8230;','info')">Vergleich starten</button>
+            </div>
+            <p>Mit Ihrer aktuellen Franchise von CHF 2'500 zahlen Sie möglicherweise zu viel. Ein Wechsel kann bis zu CHF 45 pro Monat sparen.</p>
+            <div class="rec-meta">
+              <div class="rec-meta-item">&#128176; <strong>Ersparnis CHF 45/Mt</strong></div>
+              <div class="rec-meta-item">&#128197; <strong>Wechsel bis 30. Nov.</strong></div>
+              <div class="rec-meta-item">&#11088; <strong>Score +5 Punkte</strong></div>
+            </div>
+            <div class="rec-footer">
+              <span class="rec-saving">Jährliche Ersparnis: CHF 540</span>
+              <div class="rec-providers"><span class="provider-chip">Assura</span><span class="provider-chip">Sympany</span><span class="provider-chip">KPT</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+</main>
+
+<!-- AUTH MODAL -->
+<div class="modal-overlay" id="auth-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="Auth.closeModal()">&#10005;</button>
+    <div class="modal-logo"><div class="logo">Nav<em>ia.</em></div></div>
+    <div id="auth-login">
+      <h2 class="modal-title">Willkommen zurück</h2>
+      <p class="modal-sub">Melden Sie sich in Ihrem Konto an.</p>
+      <div class="demo-hint">Demo: <strong>demo@navia.ch</strong> / <strong>demo1234</strong></div>
+      <div class="form-group">
+        <label class="form-label">E-Mail-Adresse</label>
+        <input class="form-input" type="email" id="login-email" placeholder="ihre@email.ch" value="demo@navia.ch"/>
+        <div class="form-error" id="login-error">Ungültige Anmeldedaten.</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Passwort</label>
+        <input class="form-input" type="password" id="login-pw" placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;" value="demo1234"/>
+      </div>
+      <button class="btn btn-gold" style="width:100%" onclick="Auth.login()">Anmelden &#8594;</button>
+      <div class="modal-switch">Noch kein Konto? <button onclick="Auth.togglePanel()">Jetzt registrieren</button></div>
+    </div>
+    <div id="auth-register" style="display:none">
+      <h2 class="modal-title">Konto erstellen</h2>
+      <p class="modal-sub">Kostenlos starten &#8211; keine Kreditkarte nötig.</p>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Vorname</label><input class="form-input" type="text" id="reg-first" placeholder="Max"/></div>
+        <div class="form-group"><label class="form-label">Nachname</label><input class="form-input" type="text" id="reg-last" placeholder="Muster"/></div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">E-Mail-Adresse</label>
+        <input class="form-input" type="email" id="reg-email" placeholder="ihre@email.ch"/>
+        <div class="form-error" id="reg-error">Bitte füllen Sie alle Felder aus.</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Passwort</label>
+        <input class="form-input" type="password" id="reg-pw" placeholder="Mindestens 8 Zeichen"/>
+      </div>
+      <button class="btn btn-gold" style="width:100%" onclick="Auth.register()">Konto erstellen &#8594;</button>
+      <div class="modal-switch">Bereits registriert? <button onclick="Auth.togglePanel()">Anmelden</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- ADD POLICY MODAL -->
+<div class="modal-overlay" id="add-policy-modal">
+  <div class="modal add-policy-modal" style="max-width:540px">
+    <button class="modal-close" onclick="Policies.closeAddModal()">&#10005;</button>
+    <h2 class="modal-title" style="font-size:1.4rem;margin-bottom:6px">Police hinzufügen</h2>
+    <p style="color:var(--text-muted);font-size:.85rem;margin-bottom:20px">Erfassen Sie eine neue Versicherungspolice.</p>
+    <div class="form-group">
+      <label class="form-label">Versicherungsart</label>
+      <div class="policy-type-grid" id="policy-type-picker">
+        <button class="policy-type-btn" data-type="Krankenkasse"><span class="policy-type-icon">&#127973;</span>Krankenkasse</button>
+        <button class="policy-type-btn" data-type="Autoversicherung"><span class="policy-type-icon">&#128663;</span>Auto</button>
+        <button class="policy-type-btn" data-type="Hausrat"><span class="policy-type-icon">&#127968;</span>Hausrat</button>
+        <button class="policy-type-btn" data-type="Haftpflicht"><span class="policy-type-icon">&#129309;</span>Haftpflicht</button>
+        <button class="policy-type-btn" data-type="Lebensversicherung"><span class="policy-type-icon">&#128153;</span>Lebensvers.</button>
+        <button class="policy-type-btn" data-type="Reiseversicherung"><span class="policy-type-icon">&#9992;</span>Reise</button>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Versicherer</label><input class="form-input" type="text" id="new-insurer" placeholder="z.B. Helsana"/></div>
+      <div class="form-group"><label class="form-label">Policennummer (optional)</label><input class="form-input" type="text" id="new-polnum" placeholder="z.B. PO-123456"/></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Monatsprämie (CHF)</label><input class="form-input" type="number" id="new-premium" placeholder="z.B. 120"/></div>
+      <div class="form-group"><label class="form-label">Deckungssumme</label><input class="form-input" type="text" id="new-coverage" placeholder="z.B. CHF 100'000"/></div>
+    </div>
+    <div class="form-group"><label class="form-label">Notizen (optional)</label><input class="form-input" type="text" id="new-notes" placeholder="z.B. Franchise CHF 2500"/></div>
+    <div class="form-error" id="add-policy-error">Bitte Versicherungsart, Anbieter und Prämie ausfüllen.</div>
+    <div style="display:flex;gap:10px;margin-top:8px">
+      <button class="btn btn-ghost" style="flex:1" onclick="Policies.closeAddModal()">Abbrechen</button>
+      <button class="btn btn-gold" style="flex:1" onclick="Policies.addPolicy()">Speichern</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-wrap" id="toast-wrap"></div>
+
+<script>
+const DEMO_POLICIES=[
+  {id:'p1',type:'Krankenkasse',insurer:'Helsana',polnum:'HEL-88341',premium:380,coverage:'OKP + Zusatz',notes:"Franchise CHF 2'500",score:72},
+  {id:'p2',type:'Autoversicherung',insurer:'Zürich Vers.',polnum:'ZUR-55129',premium:89,coverage:'Vollkasko',notes:'VW Golf 2021',score:85},
+  {id:'p3',type:'Hausrat',insurer:'AXA',polnum:'AXA-22019',premium:28,coverage:"CHF 80'000",notes:'3-Zimmer Zürich',score:52},
+  {id:'p4',type:'Haftpflicht',insurer:'Mobiliar',polnum:'MOB-77812',premium:12,coverage:"CHF 5'000'000",notes:'Privathaftpflicht',score:88}
+];
+
+const State={user:null,lang:'de',policies:[],timers:{}};
+function $(id){return document.getElementById(id)}
+function $$(s){return document.querySelectorAll(s)}
+
+const UI={
+  toast(msg,type='info'){
+    const w=$('toast-wrap'),el=document.createElement('div');
+    el.className='toast '+type;el.textContent=msg;
+    w.appendChild(el);setTimeout(()=>el.remove(),3200);
+  }
+};
+
+const Auth={
+  showLogin(){$('auth-login').style.display='block';$('auth-register').style.display='none';$('auth-modal').classList.add('open')},
+  showRegister(){$('auth-login').style.display='none';$('auth-register').style.display='block';$('auth-modal').classList.add('open')},
+  togglePanel(){
+    const l=$('auth-login'),r=$('auth-register');
+    l.style.display=l.style.display==='none'?'block':'none';
+    r.style.display=r.style.display==='none'?'block':'none';
+  },
+  closeModal(){$('auth-modal').classList.remove('open')},
+  login(){
+    const email=$('login-email').value.trim(),pw=$('login-pw').value.trim();
+    $('login-error').classList.remove('show');
+    if(!email||!pw){$('login-error').classList.add('show');return;}
+    const name=email==='demo@navia.ch'?'Demo User':email.split('@')[0];
+    Auth._doLogin({name,email});
+  },
+  register(){
+    const first=$('reg-first').value.trim(),last=$('reg-last').value.trim(),email=$('reg-email').value.trim(),pw=$('reg-pw').value.trim();
+    $('reg-error').classList.remove('show');
+    if(!first||!last||!email||!pw){$('reg-error').classList.add('show');return;}
+    Auth._doLogin({name:first+' '+last,email});
+  },
+  _doLogin(user){
+    State.user=user;
+    try{localStorage.setItem('navia_user',JSON.stringify(user));}catch(e){}
+    const saved=localStorage.getItem('navia_p_'+user.email);
+    State.policies=saved?JSON.parse(saved):JSON.parse(JSON.stringify(DEMO_POLICIES));
+    Auth._updateUI();Auth.closeModal();
+    UI.toast('Willkommen, '+user.name.split(' ')[0]+'!','success');
+    App.showApp();
+  },
+  logout(){
+    Policies.save();State.user=null;State.policies=[];
+    Auth._updateUI();App.showLanding();UI.toast('Erfolgreich abgemeldet.','info');
+  },
+  tryAutoLogin(){
+    try{
+      const u=JSON.parse(localStorage.getItem('navia_user')||'null');
+      if(u){State.user=u;const s=localStorage.getItem('navia_p_'+u.email);State.policies=s?JSON.parse(s):JSON.parse(JSON.stringify(DEMO_POLICIES));Auth._updateUI();return true;}
+    }catch(e){}
+    return false;
+  },
+  _updateUI(){
+    const u=State.user;
+    if(u){
+      $('header-auth').style.display='none';
+      const hu=$('header-user');hu.style.display='flex';
+      $('header-username').textContent=u.name;
+      $('user-avatar').textContent=u.name.charAt(0).toUpperCase();
+    } else {
+      $('header-auth').style.display='flex';$('header-user').style.display='none';
+    }
+  }
+};
+
+const App={
+  _si:{de:0,fr:0,it:0},
+  setLang(lang){
+    State.lang=lang;
+    $$('.lang-section').forEach(el=>el.classList.remove('active'));
+    const sec=$('lang-'+lang);if(sec)sec.classList.add('active');
+    $$('.nav-lang-btn').forEach(b=>b.classList.toggle('active',b.textContent.toLowerCase()===lang));
+    App._setVideoState(lang);
+    App._startSub(lang);
+  },
+  _setVideoState(lang){
+    $$('.lang-video').forEach(frame=>{
+      const target=frame.dataset.videoSrc;
+      if(frame.dataset.lang===lang){
+        if(frame.getAttribute('src')!==target) frame.setAttribute('src',target);
+      } else if(frame.getAttribute('src')!=='about:blank'){
+        frame.setAttribute('src','about:blank');
+      }
+    });
+  },
+  _startSub(lang){
+    clearInterval(State.timers[lang]);
+    const el=$(`${lang}-subtitle`);if(!el)return;
+    const spans=el.querySelectorAll('span');
+    let i=App._si[lang]||0;
+    spans.forEach((s,idx)=>s.classList.toggle('active',idx===i));
+    State.timers[lang]=setInterval(()=>{
+      spans[i].classList.remove('active');i=(i+1)%spans.length;
+      spans[i].classList.add('active');App._si[lang]=i;
+    },3500);
+  },
+  navigate(route){
+    $$('.app-view').forEach(el=>el.style.display='none');
+    const v=$('view-'+route);if(v)v.style.display='block';
+    $$('.sidebar-nav-item').forEach(el=>el.classList.toggle('active',el.dataset.route===route));
+    if(route==='dashboard')Dashboard.render();
+    if(route==='policies')Policies.render();
+    if(route==='analysis')Analysis.render();
+  },
+  showApp(){
+    $('page-landing').style.display='none';$('page-landing').classList.remove('active');
+    $('page-app').style.display='block';$('page-app').classList.add('active');
+    $('lang-switcher').style.display='none';
+    App.navigate('dashboard');
+  },
+  showLanding(){
+    $('page-app').style.display='none';$('page-app').classList.remove('active');
+    $('page-landing').style.display='block';$('page-landing').classList.add('active');
+    $('lang-switcher').style.display='flex';
+    App.setLang(State.lang);
+  },
+  goHome(){if(State.user)App.navigate('dashboard');else App.showLanding();}
+};
+
+const Dashboard={
+  render(){
+    const p=State.policies,n=(State.user?.name||'').split(' ')[0];
+    const h=new Date().getHours(),g=h<12?'Guten Morgen':h<18?'Guten Tag':'Guten Abend';
+    $('dash-greeting').textContent=g+(n?', '+n:'');
+    $('kpi-policies').textContent=p.length;
+    const m=p.reduce((a,x)=>a+x.premium,0);
+    $('kpi-premium').textContent='CHF '+Math.round(m).toLocaleString('de-CH');
+    setTimeout(()=>{const c=$('score-circle');if(c)c.style.strokeDashoffset=String(283-(283*.68));},150);
+  }
+};
+
+const Policies={
+  selectedType:null,
+  _icons:{Krankenkasse:'&#127973;',Autoversicherung:'&#128663;',Hausrat:'&#127968;',Haftpflicht:'&#129309;',Lebensversicherung:'&#128153;',Reiseversicherung:'&#9992;'},
+  _badges:{Krankenkasse:'kranken',Autoversicherung:'auto',Hausrat:'hausrat',Haftpflicht:'haftpflicht',Lebensversicherung:'leben',Reiseversicherung:'reise'},
+  render(f=''){
+    const g=$('policy-grid');if(!g)return;
+    const items=State.policies.filter(p=>!f||p.type.toLowerCase().includes(f.toLowerCase())||p.insurer.toLowerCase().includes(f.toLowerCase()));
+    if(!items.length){g.innerHTML='<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">&#128193;</div><h3 class="empty-title">Keine Policen gefunden</h3><p class="empty-sub">Fügen Sie Ihre erste Versicherungspolice hinzu.</p><button class="btn btn-gold" onclick="Policies.openAddModal()">&#43; Hinzufügen</button></div>';return;}
+    g.innerHTML=items.map(p=>Policies._card(p)).join('');
+    g.querySelectorAll('.policy-score-fill').forEach(el=>{const w=el.dataset.w;setTimeout(()=>el.style.width=w,100);});
+  },
+  _card(p){
+    const badge=Policies._badges[p.type]||'haftpflicht';
+    const icon=Policies._icons[p.type]||'&#128203;';
+    const s=p.score||70;
+    return `<div class="policy-card">
+      <div class="policy-card-header">
+        <span class="policy-type-badge badge-${badge}">${p.type}</span>
+        <button class="policy-menu" onclick="Policies.deletePolicy('${p.id}')" title="Löschen">&#128465;</button>
+      </div>
+      <div class="policy-name">${icon} ${p.insurer}</div>
+      <div class="policy-insurer">${p.polnum||'Keine Policennummer'}</div>
+      <div class="policy-meta">
+        <div class="policy-meta-item"><div class="policy-meta-key">Monatsprämie</div><div class="policy-meta-val">CHF ${p.premium}</div></div>
+        <div class="policy-meta-item"><div class="policy-meta-key">Deckung</div><div class="policy-meta-val">${p.coverage||'–'}</div></div>
+        <div class="policy-meta-item" style="grid-column:1/-1"><div class="policy-meta-key">Notizen</div><div class="policy-meta-val">${p.notes||'–'}</div></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px">
+        <span style="font-size:.75rem;color:var(--text-dim)">Qualität</span>
+        <span style="font-size:.8rem;color:var(--gold)">${s}%</span>
+      </div>
+      <div class="policy-score-bar"><div class="policy-score-fill" data-w="${s}%" style="width:0"></div></div>
+    </div>`;
+  },
+  filter(v){Policies.render(v)},
+  openAddModal(){
+    this.selectedType=null;
+    $$('#policy-type-picker .policy-type-btn').forEach(b=>b.classList.remove('selected'));
+    ['new-insurer','new-polnum','new-premium','new-coverage','new-notes'].forEach(id=>{const el=$(id);if(el)el.value='';});
+    $('add-policy-error').classList.remove('show');
+    $('add-policy-modal').classList.add('open');
+  },
+  closeAddModal(){$('add-policy-modal').classList.remove('open')},
+  addPolicy(){
+    const type=this.selectedType,insurer=$('new-insurer').value.trim(),premium=parseFloat($('new-premium').value)||0;
+    $('add-policy-error').classList.remove('show');
+    if(!type||!insurer||!premium){$('add-policy-error').classList.add('show');return;}
+    const p={id:'p'+Date.now(),type,insurer,polnum:$('new-polnum').value.trim(),premium,coverage:$('new-coverage').value.trim()||'–',notes:$('new-notes').value.trim(),score:Math.floor(Math.random()*25)+65};
+    State.policies.push(p);Policies.save();Policies.closeAddModal();Policies.render();
+    UI.toast(type+' ('+insurer+') hinzugefügt.','success');Dashboard.render();
+  },
+  deletePolicy(id){
+    if(!confirm('Police wirklich löschen?'))return;
+    State.policies=State.policies.filter(p=>p.id!==id);
+    Policies.save();Policies.render();UI.toast('Police gelöscht.','info');Dashboard.render();
+  },
+  save(){if(State.user){try{localStorage.setItem('navia_p_'+State.user.email,JSON.stringify(State.policies));}catch(e){}}}
+};
+
+const Analysis={
+  render(){
+    setTimeout(()=>{const c=$('analysis-circle');if(c)c.style.strokeDashoffset=String(314-(314*.68));},150);
+    const list=$('policy-analysis-list');if(!list)return;
+    list.innerHTML=State.policies.map(p=>{
+      const col=p.score>=80?'var(--green)':p.score>=60?'var(--orange)':'var(--red)';
+      const icon=Policies._icons[p.type]||'&#128203;';
+      return `<div class="policy-analysis-item">
+        <div class="pai-icon">${icon}</div>
+        <div class="pai-info"><div class="pai-name">${p.type}</div><div class="pai-detail">${p.insurer} &middot; CHF ${p.premium}/Mt</div></div>
+        <div class="pai-score"><div class="pai-score-num" style="color:${col}">${p.score}%</div><div class="pai-score-bar"><div class="pai-score-fill" style="width:${p.score}%;background:${col}"></div></div></div>
+      </div>`;
+    }).join('')||'<p style="color:var(--text-muted);font-size:.85rem">Keine Policen erfasst.</p>';
+  }
+};
+
+// Policy type picker
+document.querySelectorAll('#policy-type-picker .policy-type-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('#policy-type-picker .policy-type-btn').forEach(b=>b.classList.remove('selected'));
+    btn.classList.add('selected');Policies.selectedType=btn.dataset.type;
+  });
+});
+
+// Close modals on overlay click
+$('auth-modal').addEventListener('click',e=>{if(e.target===$('auth-modal'))Auth.closeModal();});
+$('add-policy-modal').addEventListener('click',e=>{if(e.target===$('add-policy-modal'))Policies.closeAddModal();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){Auth.closeModal();Policies.closeAddModal();}});
+
+// INIT
+(function(){
+  App.setLang('de');
+  if(Auth.tryAutoLogin())App.showApp();
+})();
+</script>
+</body>
+</html>
