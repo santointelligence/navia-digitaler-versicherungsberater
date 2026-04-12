@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+h<!DOCTYPE html>
 <html lang="de">
 <head>
 <meta charset="UTF-8">
@@ -22,7 +22,7 @@
   --red-l: #fdeaea;
   --blue: #1a3c6e;
   --blue-l: #eaf0f9;
-  --card-dark: #111c30;
+  --card-dark: #111c30;h
   --glow-gold: rgba(196,163,90,.12);
   --glow-blue: rgba(30,52,86,.08);
 }
@@ -1968,7 +1968,7 @@ async function sendChat(){
 
   if(_aiMode==='faq'){
     // Regelbasierter Modus
-    setTimeout(()=>{
+    setTimeout(async()=>{
 
 
   try{
@@ -2009,7 +2009,7 @@ setChatLoading(false);
       chatHistory.pop();
     }
   }
-}
+}, 300);
 }
 }
 
