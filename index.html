@@ -1968,7 +1968,7 @@ async function sendChat(){
 
   if(_aiMode==='faq'){
     // Regelbasierter Modus
-    setTimeout(()=>{
+    setTimeout(async()=>{
 
 
   try{
@@ -2009,7 +2009,7 @@ setChatLoading(false);
       chatHistory.pop();
     }
   }
-}
+}, 300);
 }
 }
 
