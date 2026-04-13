@@ -41,7 +41,7 @@ body::before{content:'';position:fixed;inset:0;background:
 
 /* ── NAV — GLASSMORPHISM ── */
 nav{position:sticky;top:0;z-index:200;background:rgba(246,247,250,0.85);backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px) saturate(1.4);border-bottom:1px solid rgba(221,225,234,0.6);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 32px;gap:12px;flex-wrap:nowrap;transition:all .4s var(--ease-out-expo)}
-.logo{font-family:'Playfair Display',serif;font-size:20px;font-weight:600;letter-spacing:-0.5px;color:var(--ink);flex-shrink:0}
+.logo{cursor:pointer;font-family:'Playfair Display',serif;font-size:20px;font-weight:600;letter-spacing:-0.5px;color:var(--ink);flex-shrink:0}
 .logo em{color:var(--gold);font-style:normal}
 .nav-right{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
 .lang-btn{padding:5px 11px;font-size:12px;font-weight:500;border:1px solid var(--line);border-radius:6px;background:none;cursor:pointer;color:var(--muted);font-family:'DM Sans',sans-serif;transition:all .15s}
@@ -238,7 +238,7 @@ body::after{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 .video-lang.active{display:block}
 .video-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:80%;height:80%;background:radial-gradient(ellipse,rgba(184,149,90,.08),transparent 70%);z-index:0;pointer-events:none;filter:blur(60px)}
 .video-features{display:flex;gap:20px;justify-content:center;margin-top:36px;flex-wrap:wrap}
-.video-feature{display:flex;transition:background .3s,border-color .3s,transform .3s var(--ease-out-expo);align-items:center;gap:8px;padding:10px 18px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:99px;backdrop-filter:blur(10px)}
+.video-feature{display:flex;align-items:center;gap:8px;padding:10px 18px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:99px;backdrop-filter:blur(10px)}
 .video-feature-icon{font-size:16px}
 .video-feature-text{font-size:12px;color:rgba(255,255,255,.6);font-weight:400}
 
@@ -293,7 +293,7 @@ body::after{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 
 /* ── MEINE POLICEN DASHBOARD ── */
 #meine-policen{display:none;padding:80px 24px 80px;max-width:920px;margin:0 auto}
-#meine-policen.visible{display:block;animation:fadeSlideUp .5s var(--ease-out-expo) both}
+#meine-policen.visible{display:block}
 .policen-header{margin-bottom:36px}
 .policen-header h2{font-family:'Playfair Display',serif;font-size:2rem;font-weight:500;margin-bottom:8px;color:var(--ink)}
 .policen-header p{color:var(--muted);font-size:.95rem}
@@ -323,7 +323,7 @@ body::after{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 
 /* ── NAVIA CHAT ── */
 #navia-chat-section{display:none;padding:80px 24px 80px;max-width:860px;margin:0 auto}
-#navia-chat-section.visible{display:block;animation:fadeSlideUp .5s var(--ease-out-expo) both}
+#navia-chat-section.visible{display:block}
 .chat-header{margin-bottom:32px}
 .chat-header h2{font-family:'Playfair Display',serif;font-size:2rem;font-weight:500;margin-bottom:8px;color:var(--ink)}
 .chat-header p{color:var(--muted);font-size:.95rem}
@@ -458,6 +458,9 @@ body::after{content:'';position:fixed;top:0;left:0;right:0;height:2px;background
 .reveal.visible{opacity:1;transform:translateY(0)}
 @keyframes pageIn{from{opacity:0}to{opacity:1}}
 body{animation:pageIn .5s ease-out}
+
+.policen-header{text-align:center}.policen-stats{justify-content:center}.stat-card{max-width:200px;transition:transform .3s ease,box-shadow .3s ease}.stat-card:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(0,0,0,.08)}
+.policy-card{transition:transform .3s ease,box-shadow .3s ease}.policy-card:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(0,0,0,.08)}
 @keyframes fadeSlideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 </style>
 </head>
@@ -1024,7 +1027,15 @@ body{animation:pageIn .5s ease-out}
     </div>
   </div>
 
-<div style="margin-top:32px;background:var(--white);border:1.5px dashed var(--line);border-radius:16px;padding:32px;text-align:center;transition:border-color .3s,background .3s" id="policy-upload-area"><div style="font-size:28px;margin-bottom:10px;opacity:.6">\ud83d\udcc4</div><div style="font-family:Playfair Display,serif;font-size:16px;font-weight:500;color:var(--ink);margin-bottom:6px">Weitere Police hochladen</div><div style="font-size:13px;color:var(--muted);margin-bottom:16px">Laden Sie Ihre Versicherungsdokumente hoch (PDF, JPG). Navia analysiert diese automatisch.</div><label style="display:inline-flex;align-items:center;gap:6px;padding:10px 20px;background:var(--ink);color:#fff;border-radius:10px;font-size:13px;font-weight:500;cursor:pointer;transition:background .2s"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2v12M2 8h12"/></svg>Datei ausw\u00E4hlen<input type="file" id="policy-upload-input" accept=".pdf,.jpg,.jpeg,.png" multiple style="display:none" onchange="handlePolicyUpload(this)"></label><div id="policy-upload-list" style="margin-top:16px;text-align:left"></div></div>
+
+<div style="margin-top:32px;background:var(--white);border:1.5px dashed var(--line);border-radius:16px;padding:32px;text-align:center" id="policy-upload-area">
+<div style="font-size:32px;margin-bottom:12px;opacity:.5">+</div>
+<div style="font-size:15px;font-weight:600;color:var(--ink);margin-bottom:6px">Weitere Police hochladen</div>
+<div style="font-size:13px;color:var(--muted);margin-bottom:16px">PDF, JPG oder PNG hochladen</div>
+<label for="policy-upload-input" style="display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:var(--ink);color:#fff;border-radius:10px;font-size:13px;font-weight:500;cursor:pointer">Datei auswählen</label>
+<input type="file" id="policy-upload-input" accept=".pdf,.jpg,.jpeg,.png" multiple style="display:none" onchange="handlePolicyUpload(this)">
+<div id="policy-upload-list" style="margin-top:16px;text-align:left"></div>
+</div>
 </section>
 
 <!-- NAVIA CHAT -->
@@ -1933,8 +1944,6 @@ function doLogin(){
     errEl.textContent='Kein Account mit dieser E-Mail gefunden. Demo-Zugang: petra@navia.ch / Petra1234';
   }
 }
-function handlePolicyUpload(input){var list=document.getElementById('policy-upload-list');Array.from(input.files).forEach(function(file){var item=document.createElement('div');item.style.cssText='display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--bg);border:1px solid var(--line);border-radius:10px;margin-bottom:8px;animation:fadeSlideUp .3s var(--ease-out-expo) both';var ext=file.name.split(".").pop().toUpperCase();var icon=ext==="PDF"?"\ud83d\udcd5":"\ud83d\uddbc\ufe0f";var sz=(file.size/1024/1024).toFixed(1);item.innerHTML=icon+' <div style="flex:1"><div style="font-size:13px;font-weight:500;color:var(--ink)">'+file.name+'</div><div style="font-size:11px;color:var(--muted)">'+sz+' MB</div></div><div style="font-size:11px;color:var(--green);font-weight:500">\u2713 OK</div>';list.appendChild(item)});input.value=""}
-function goHome(){hideAllSections();document.getElementById('hero').style.display='';document.getElementById('progress-wrap').style.display='none';document.getElementById('card-wrap').style.display='none';window.scrollTo({top:0,behavior:'smooth'})}
 function doLogout(){
   _isLoggedIn=false;
   document.getElementById('nav-login-btn').style.display='inline-block';
@@ -2339,6 +2348,9 @@ document.addEventListener('DOMContentLoaded', () => {
     el.classList.add('reveal'); revealObserver.observe(el);
   });
 });
+
+function handlePolicyUpload(input){var list=document.getElementById("policy-upload-list");Array.from(input.files).forEach(function(file){var item=document.createElement("div");item.style.cssText="display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--bg);border:1px solid var(--line);border-radius:10px;margin-bottom:8px";var ext=file.name.split(".").pop().toUpperCase();var sz=(file.size/1024/1024).toFixed(1);item.innerHTML="<div style=\"flex:1\"><div style=\"font-size:13px;font-weight:500;color:var(--ink)\">"+file.name+"</div><div style=\"font-size:11px;color:var(--muted)\">"+sz+" MB</div></div><div style=\"font-size:11px;color:var(--green);font-weight:500\">OK</div>";list.appendChild(item)});input.value=""}
+function goHome(){hideAllSections();document.getElementById("hero").style.display="";document.getElementById("progress-wrap").style.display="none";document.getElementById("card-wrap").style.display="none";window.scrollTo({top:0,behavior:"smooth"})}
 </script>
 
 </body>
