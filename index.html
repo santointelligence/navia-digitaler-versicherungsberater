@@ -552,7 +552,7 @@ body{animation:pageIn .5s ease-out}
 
     <!-- 3 MAIN ACTIONS -->
     <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:28px">
-      <button class="start-btn" style="background:linear-gradient(135deg,var(--gold),#d4b06a);color:var(--ink);box-shadow:0 4px 20px rgba(196,163,90,.3)" onclick="toggleFabChat()">
+      <button class="start-btn" style="background:linear-gradient(135deg,var(--gold),#d4b06a);color:var(--ink);box-shadow:0 4px 20px rgba(196,163,90,.3)" onclick="openFullChat()">
         <span style="font-size:18px">💬</span>
         <span>Jetzt mit Navia chatten</span>
       </button>
@@ -1291,8 +1291,8 @@ body{animation:pageIn .5s ease-out}
     <div class="fab-header">
       <div class="fab-header-avatar">N</div>
       <div class="fab-header-info">
-        <div class="fab-header-name">Navia</div>
-        <div class="fab-header-status"><div class="fab-header-dot"></div> Online — antwortet in Sekunden</div>
+        <div class="fab-header-name">Helpcenter</div>
+        <div class="fab-header-status"><div class="fab-header-dot"></div> Fragen zu Navia & Services</div>
       </div>
       <span class="fab-header-badge">CLAUDE AI</span>
       <button class="fab-header-close" onclick="toggleFabChat()">&times;</button>
@@ -1300,7 +1300,7 @@ body{animation:pageIn .5s ease-out}
     <div id="fab-chat-messages">
       <div class="fab-msg navia">
         <div class="fab-msg-avatar navia">N</div>
-        <div class="fab-msg-bubble">Hallo! 👋 Ich bin Navia, Ihre digitale Versicherungsberaterin. Stellen Sie mir eine Frage zu Versicherungen in der Schweiz — z.B. Krankenkasse, Haftpflicht, Hausrat, Vorsorge oder Rechtsschutz.</div>
+        <div class="fab-msg-bubble">Willkommen beim Navia Helpcenter. Hier beantworte ich Fragen zur Website, unseren Diensten und allgemeine Versicherungsfragen.</div>
       </div>
     </div>
     <div id="fab-typing">
@@ -1319,11 +1319,11 @@ body{animation:pageIn .5s ease-out}
       <div class="fab-sug" onclick="sendFabSuggestion(this)">Krankenkasse wechseln: wann?</div>
     </div>
     <div class="fab-input-bar">
-      <input id="fab-chat-input" type="text" placeholder="Frage zu Versicherungen..." onkeydown="if(event.key==='Enter')sendFabChat()">
+      <input id="fab-chat-input" type="text" placeholder="Frage zu Navia oder unseren Diensten..." onkeydown="if(event.key==='Enter')sendFabChat()">
       <button id="fab-send-btn" onclick="sendFabChat()">Senden</button>
     </div>
   </div>
-  <button id="fab-chat-btn" onclick="toggleFabChat()" title="Navia Chatbot öffnen">
+  <button id="fab-chat-btn" onclick="toggleFabChat()" title="Helpcenter öffnen">
     <span class="fab-icon">N</span>
   </button>
 </div>
@@ -2364,6 +2364,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function handlePolicyUpload(input){var list=document.getElementById("policy-upload-list");Array.from(input.files).forEach(function(file){var item=document.createElement("div");item.style.cssText="display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--bg);border:1px solid var(--line);border-radius:10px;margin-bottom:8px";var ext=file.name.split(".").pop().toUpperCase();var sz=(file.size/1024/1024).toFixed(1);item.innerHTML="<div style=\"flex:1\"><div style=\"font-size:13px;font-weight:500;color:var(--ink)\">"+file.name+"</div><div style=\"font-size:11px;color:var(--muted)\">"+sz+" MB</div></div><div style=\"font-size:11px;color:var(--green);font-weight:500\">OK</div>";list.appendChild(item)});input.value=""}
 function goHome(){hideAllSections();document.getElementById("hero").style.display="";document.getElementById("progress-wrap").style.display="none";document.getElementById("card-wrap").style.display="none";window.scrollTo({top:0,behavior:"smooth"})}
+
+function openFullChat(){hideAllSections();document.getElementById("hero").style.display="none";document.getElementById("card-wrap").style.display="none";document.getElementById("partner-section").style.display="none";document.getElementById("progress-wrap").style.display="none";document.getElementById("navia-chat-section").classList.add("visible");document.querySelectorAll(".portal-nav-btn").forEach(function(b){b.style.display="inline-flex"});document.getElementById("chat-nav-link").classList.add("active");window.scrollTo({top:0,behavior:"smooth"});}
 </script>
 
 </body>
